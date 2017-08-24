@@ -93,13 +93,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在ubuntu上搭建PHP7+Mysql+NGinx">
+<meta property="og:url" content="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:updated_time" content="2017-06-29T00:00:33.851Z">
+<meta property="og:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
+<meta property="og:updated_time" content="2017-08-24T14:04:23.989Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="在ubuntu上搭建PHP7+Mysql+NGinx">
+<meta name="twitter:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
 
 
 
@@ -127,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/"/>
 
 
 
 
 
-  <title>about | 用心去飞翔</title>
+  <title>在ubuntu上搭建PHP7+Mysql+NGinx | 用心去飞翔</title>
   
 
 
@@ -293,18 +296,242 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="蚂蚁">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="用心去飞翔">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在ubuntu上搭建PHP7+Mysql+NGinx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T21:41:05+08:00">
+                2017-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
+
+    <div class="post-body" itemprop="articleBody">
+
       
-    
+      
+
+      
+        <p>本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。</p>
+<a id="more"></a>
+<h4 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h4><ul>
+<li><p>安装Nginx</p>
+<pre><code>sudo apt-get undate
+
+sudo apt-get install nginx
+</code></pre></li>
+<li>配置Nginx    </li>
+</ul>
+<p>打开<code>/etc/nginx/sites-avaliable/default</code>文件，修改<code>root</code>、<code>index</code>、<code>location</code>，增加<code>location ~ php$</code>部分，重启Nginx：<code>sudo service nginx restart</code>。配置文件如下：</p>
+<pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    #root为项目代码所在目录
+    #index在中间添加index.php
+    root /websites;
+    index index.php index.html index.htm;
+    # Make site accessible from http://localhost/
+    #填写外网IP或者自己已经解析的域名
+    server_name http://www.somethingaboutchina.com;
+    #更改未被注释一行
+
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ /index.php?$query_string;
+        # Uncomment to enable naxsi on this location
+        # include /etc/nginx/naxsi.rules
+    }
+    #添加下面代码
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+</code></pre><h4 id="安装PHP7"><a href="#安装PHP7" class="headerlink" title="安装PHP7"></a>安装PHP7</h4><ul>
+<li><p>添加PPA:PPA，表示 Personal Package Archives，也就是个人软件包集</p>
+<pre><code>sudo apt-get install python-software-properties software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+</code></pre></li>
+<li><p>安装PHP7以及所需的一些扩展</p>
+<pre><code>sudo apt-get install php7.0-fpm php7.0-cli php7.0-mcrypt php7.0-mysql php7.0-mbstring php7.0-xml
+</code></pre></li>
+<li><p>配置PHP7</p>
+<pre><code>1. 打开`php.ini`配置文件，找到`cgi.fix_pathinfo`选项，去掉注释，然后将值设置为0 (vim使用“/”进入查找模式)
+
+    `sudo vim /etc/php/7.0/fpm/php.ini`
+
+2. 启用php7.0-mcrypt
+
+    `sudo phpenmod mcrypt`
+
+3. 重启php7.0-fpm
+
+    `sudo service php7.0-fpm restart`
+</code></pre></li>
+</ul>
+<p>####安装Mysql</p>
+<pre><code>sudo apt-get install mysql-server-5.7 mysql-client-5.7
+</code></pre><p>####安装Composer</p>
+<ul>
+<li><p>安装Composer：</p>
+<pre><code>到[Composer官网](https://getcomposer.org/)下载`composer.phar`
+
+sudo mv composer.phar /usr/local/bin/composer
+</code></pre></li>
+<li><p>替换Composer源</p>
+<pre><code>`composer config -g repo.packagist composer https://packagist.phpcomposer.com`
+</code></pre></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/03/iOS相关问题/" rel="next" title="iOS相关问题">
+                <i class="fa fa-chevron-left"></i> iOS相关问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -336,8 +563,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400"
@@ -390,6 +626,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Nginx"><span class="nav-number">1.</span> <span class="nav-text">安装Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP7"><span class="nav-number">2.</span> <span class="nav-text">安装PHP7</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -523,10 +775,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
