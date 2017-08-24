@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
-<meta property="og:updated_time" content="2017-08-24T14:04:23.989Z">
+<meta property="og:updated_time" content="2017-08-24T14:07:47.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在ubuntu上搭建PHP7+Mysql+NGinx">
 <meta name="twitter:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
@@ -404,10 +404,10 @@
 
 sudo apt-get install nginx
 </code></pre></li>
-<li>配置Nginx    </li>
-</ul>
-<p>打开<code>/etc/nginx/sites-avaliable/default</code>文件，修改<code>root</code>、<code>index</code>、<code>location</code>，增加<code>location ~ php$</code>部分，重启Nginx：<code>sudo service nginx restart</code>。配置文件如下：</p>
-<pre><code>server {
+<li><p>配置Nginx    </p>
+<pre><code>打开`/etc/nginx/sites-avaliable/default`文件，修改`root`、`index`、`location`，增加`location ~ php$`部分，重启Nginx：`sudo service nginx restart`。配置文件如下：
+
+server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
     #root为项目代码所在目录
@@ -436,7 +436,9 @@ sudo apt-get install nginx
         include fastcgi_params;
     }
 }
-</code></pre><h4 id="安装PHP7"><a href="#安装PHP7" class="headerlink" title="安装PHP7"></a>安装PHP7</h4><ul>
+</code></pre></li>
+</ul>
+<h4 id="安装PHP7"><a href="#安装PHP7" class="headerlink" title="安装PHP7"></a>安装PHP7</h4><ul>
 <li><p>添加PPA:PPA，表示 Personal Package Archives，也就是个人软件包集</p>
 <pre><code>sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:ondrej/php
@@ -459,10 +461,8 @@ sudo apt-get update
     `sudo service php7.0-fpm restart`
 </code></pre></li>
 </ul>
-<p>####安装Mysql</p>
-<pre><code>sudo apt-get install mysql-server-5.7 mysql-client-5.7
-</code></pre><p>####安装Composer</p>
-<ul>
+<h4 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h4><pre><code>sudo apt-get install mysql-server-5.7 mysql-client-5.7
+</code></pre><h4 id="安装Composer"><a href="#安装Composer" class="headerlink" title="安装Composer"></a>安装Composer</h4><ul>
 <li><p>安装Composer：</p>
 <pre><code>到[Composer官网](https://getcomposer.org/)下载`composer.phar`
 
@@ -636,7 +636,7 @@ sudo mv composer.phar /usr/local/bin/composer
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Nginx"><span class="nav-number">1.</span> <span class="nav-text">安装Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP7"><span class="nav-number">2.</span> <span class="nav-text">安装PHP7</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Nginx"><span class="nav-number">1.</span> <span class="nav-text">安装Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP7"><span class="nav-number">2.</span> <span class="nav-text">安装PHP7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Mysql"><span class="nav-number">3.</span> <span class="nav-text">安装Mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Composer"><span class="nav-number">4.</span> <span class="nav-text">安装Composer</span></a></li></ol></div>
             
 
           </div>
