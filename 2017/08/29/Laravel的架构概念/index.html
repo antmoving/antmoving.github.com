@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/29/Laravel的架构概念/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
-<meta property="og:updated_time" content="2017-08-28T23:34:12.692Z">
+<meta property="og:updated_time" content="2017-08-29T13:54:39.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel的架构概念">
 <meta name="twitter:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
@@ -376,7 +376,104 @@
 <p>服务提供者负责启动框架的组件，例如数据库、队列、验证、路由组件等。</p>
 <p>一旦应用被启动以及所有的服务提供者被注册，<code>Request</code>就会被交给路由器来调度。路由器会将请求调度给路由或者控制器，当然，也会运行特定路由的中间件。</p>
 <p>服务提供者才是Laravel应用的关键。应用实例被创建，服务提供者被注册，请求被传递，这样就启动了应用。</p>
-<h4 id="服务容器-Service-Container"><a href="#服务容器-Service-Container" class="headerlink" title="服务容器(Service Container)"></a>服务容器(Service Container)</h4>
+<h4 id="服务容器-Service-Container-：绑定和解析"><a href="#服务容器-Service-Container-：绑定和解析" class="headerlink" title="服务容器(Service Container)：绑定和解析"></a>服务容器(Service Container)：绑定和解析</h4><p>服务容器用来管理类的依赖项和执行依赖项注入。依赖项注入：通过构造器或setter方法来将依赖项注入到类中。</p>
+<p>几乎所有的绑定(将依赖项类绑定到服务容器中)都是在服务提供者中被注册的。</p>
+<p>在服务提供者中，通过<code>$this-&gt;app</code>属性来获取容器。可以通过<code>bind</code>方法来注册绑定，传递类名或接口名，以及会返回类实例的闭包。</p>
+<pre><code>$this-&gt;app-&gt;bind(&apos;HelpSpot\API&apos;, function ($app) {
+    return new HelpSpot\API($app-&gt;make(&apos;HttpClient&apos;));
+});
+</code></pre><p><code>singleton</code>方法将类或接口绑定到容器中，并且只会被解析一次。</p>
+<pre><code>$this-&gt;app-&gt;singleton(&apos;HelpSpot\API&apos;, function ($app) {
+    return new HelpSpot\API($app-&gt;make(&apos;HttpClient&apos;));
+});
+</code></pre><p><code>instance</code>方法用来将存在的对象实例绑定到容器中。</p>
+<pre><code>$api = new HelpSpot\API(new HttpClient);
+
+$this-&gt;app-&gt;instance(&apos;HelpSpot\API&apos;, $api);
+</code></pre><p>有时候类会接收一些注入的类，但也会需要原始值类型，比如正数，这时候可以使用上下文绑定来注入任何值。</p>
+<pre><code>$this-&gt;app-&gt;when(&apos;App\Http\Controllers\UserController&apos;)
+  -&gt;needs(&apos;$variableName&apos;)
+  -&gt;give($value);
+</code></pre><p>服务容器能够将接口绑定到具体的实现类上：</p>
+<pre><code>$this-&gt;app-&gt;bind(
+    &apos;App\Contracts\EventPusher&apos;,
+    &apos;App\Services\RedisEventPusher&apos;
+);
+</code></pre><p>如果两个类需要相同的接口，但是又希望每个类注入不同的实现，这时候可以使用上下文绑定(Filesytem是接口)：</p>
+<pre><code>$this-&gt;app-&gt;when(PhotoController::class)
+  -&gt;needs(Filesystem::class)
+  -&gt;give(function () {
+      return Storage::disk(&apos;local&apos;);
+  });
+
+$this-&gt;app-&gt;when(VideoController::class)
+  -&gt;needs(Filesystem::class)
+  -&gt;give(function () {
+      return Storage::disk(&apos;s3&apos;);
+  });
+</code></pre><p>有时候，需要解析某种类别(实现相同接口)的所有绑定的类，可以使用<code>tag</code>方法来给类分配标签。</p>
+<pre><code>$this-&gt;app-&gt;bind(&apos;SpeedReport&apos;, function () {
+});
+
+$this-&gt;app-&gt;bind(&apos;MemoryReport&apos;, function () {
+});
+
+$this-&gt;app-&gt;tag([&apos;SpeedReport&apos;, &apos;MemoryReport&apos;], &apos;reports&apos;);
+
+//通过tagged方法来解析
+$this-&gt;app-&gt;bind(&apos;ReportAggregator&apos;, function ($app) {
+    return new ReportAggregator($app-&gt;tagged(&apos;reports&apos;));
+});
+</code></pre><p>使用<code>make</code>方法来从容器中解析类的实例，该方法接收希望解析的类名或接口名。</p>
+<pre><code>$api = $this-&gt;app-&gt;make(&apos;HelpSpot\API&apos;);
+</code></pre><p>如果所在的代码位置无法获取<code>$app</code>变量，则使用全局的<code>resolve</code>函数：</p>
+<pre><code>$api = resolve(&apos;HelpSpot\API&apos;);
+</code></pre><p>如果类的依赖项无法通过容器解析，可以通过将依赖项作为关联数组传递到<code>makeWith</code>方法中。</p>
+<pre><code>$api = $this-&gt;app-&gt;makeWith(&apos;HelpSpot\API&apos;, [&apos;id&apos; =&gt; 1]);
+</code></pre><p>服务容器每次解析对象时，都会发出事件，可以使用<code>resolving</code>方法来监听该事件：</p>
+<pre><code>$this-&gt;app-&gt;resolving(function ($object, $app) {
+    // Called when container resolves object of any type...
+});
+
+$this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
+    // Called when container resolves objects of type &quot;HelpSpot\API&quot;...
+});
+</code></pre><p>####服务提供者(Service Provider)</p>
+<p>服务提供者是Laravel应用启动加载(bootstrap：注册服务容器绑定、事件监听、中间件、路由等)的中心位置。</p>
+<p><code>config/app.php</code>文件包含<code>providers</code>数组，这些服务提供者类会被加载。当然，有许多是<code>deferred</code>提供者，意味着它们只有在需要的时候才会加载。</p>
+<p>所有的服务提供者都继承自<code>Illuminate\Support\ServiceProvider</code>。大多数的服务提供者都包含<code>register</code>和<code>boot</code>方法。在<code>register</code>方法中，只应该执行绑定到服务容器的操作，不要执行注册事件监听器、路由等其它操作。</p>
+<pre><code>class RiakServiceProvider extends ServiceProvider{
+    public function register(){
+        $this-&gt;app-&gt;singleton(Connection::class, function ($app) {
+                return new Connection(config(&apos;riak&apos;));
+        });
+    }
+}
+</code></pre><p><code>boot</code>方法会在其它所有服务提供者被注册后被调用，就是说可以获取其它所有注册的服务。</p>
+<pre><code>class ComposerServiceProvider extends ServiceProvider{
+    public function boot(){
+        view()-&gt;composer(&apos;view&apos;, function () {
+        //
+        });
+    }
+}
+</code></pre><p>所有的服务提供者都是注册在<code>config/app.php</code>配置文件中，该文件包含<code>providers</code>数组。默认，Laravel核心的服务提供者都被列在该数组中。</p>
+<p>如果服务提供者只注册服务容器的绑定，可以选择延迟它的注册，直到需要的时候再注册。为了延迟服务提供者的加载，可以将<code>defer</code>属性设置为<code>true</code>和定义<code>provides</code>方法，该方法应该返回由服务提供者注册的服务容器绑定。</p>
+<pre><code>class RiakServiceProvider extends ServiceProvider{
+
+    protected $defer = true;
+
+    public function register(){
+        $this-&gt;app-&gt;singleton(Connection::class, function ($app) {
+        return new Connection($app[&apos;config&apos;][&apos;riak&apos;]);});
+    }
+
+    public function provides(){
+        return [Connection::class];
+    }
+
+}
+</code></pre>
       
     </div>
 
@@ -421,6 +518,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/29/回顾Spring框架的相关概念/" rel="prev" title="回顾Spring框架的相关概念">
+                回顾Spring框架的相关概念 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -492,7 +593,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -540,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container-：绑定和解析"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)：绑定和解析</span></a></li></ol></div>
             
 
           </div>
