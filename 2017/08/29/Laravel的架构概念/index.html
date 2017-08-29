@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/29/Laravel的架构概念/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
-<meta property="og:updated_time" content="2017-08-29T13:54:39.158Z">
+<meta property="og:updated_time" content="2017-08-29T13:58:08.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel的架构概念">
 <meta name="twitter:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
@@ -438,8 +438,7 @@ $this-&gt;app-&gt;bind(&apos;ReportAggregator&apos;, function ($app) {
 $this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
     // Called when container resolves objects of type &quot;HelpSpot\API&quot;...
 });
-</code></pre><p>####服务提供者(Service Provider)</p>
-<p>服务提供者是Laravel应用启动加载(bootstrap：注册服务容器绑定、事件监听、中间件、路由等)的中心位置。</p>
+</code></pre><h4 id="服务提供者-Service-Provider"><a href="#服务提供者-Service-Provider" class="headerlink" title="服务提供者(Service Provider)"></a>服务提供者(Service Provider)</h4><p>服务提供者是Laravel应用启动加载(bootstrap：注册服务容器绑定、事件监听、中间件、路由等)的中心位置。</p>
 <p><code>config/app.php</code>文件包含<code>providers</code>数组，这些服务提供者类会被加载。当然，有许多是<code>deferred</code>提供者，意味着它们只有在需要的时候才会加载。</p>
 <p>所有的服务提供者都继承自<code>Illuminate\Support\ServiceProvider</code>。大多数的服务提供者都包含<code>register</code>和<code>boot</code>方法。在<code>register</code>方法中，只应该执行绑定到服务容器的操作，不要执行注册事件监听器、路由等其它操作。</p>
 <pre><code>class RiakServiceProvider extends ServiceProvider{
@@ -641,7 +640,7 @@ $this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container-：绑定和解析"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)：绑定和解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container-：绑定和解析"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)：绑定和解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务提供者-Service-Provider"><span class="nav-number">3.</span> <span class="nav-text">服务提供者(Service Provider)</span></a></li></ol></div>
             
 
           </div>
