@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/29/Laravel的架构概念/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
-<meta property="og:updated_time" content="2017-08-29T13:58:08.224Z">
+<meta property="og:updated_time" content="2017-08-30T13:08:26.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel的架构概念">
 <meta name="twitter:description" content="本篇博客从整体的角度来介绍Laravel框架是如何工作的。">
@@ -472,7 +472,13 @@ $this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
     }
 
 }
-</code></pre>
+</code></pre><h4 id="Facade：服务容器中的类的静态接口"><a href="#Facade：服务容器中的类的静态接口" class="headerlink" title="Facade：服务容器中的类的静态接口"></a>Facade：服务容器中的类的静态接口</h4><p>Laravel的Facade作为服务容器中底层类的静态代理，所有的facade都定义在<code>Illuminate\Support\Facades</code>命名空间中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">use Illuminate\Support\Facades\Cache;</div><div class="line"></div><div class="line">Route::get(&apos;/cache&apos;, function () &#123;</div><div class="line">    return Cache::get(&apos;key&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>除了facade外，Laravel还包含了一系列辅助(helper)函数，用来执行常见的任务：产生视图，发射事件，调度工作，发送响应。许多辅助函数和其对应的facade执行相同的功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">return View::make(&apos;profile&apos;);</div><div class="line"></div><div class="line">return view(&apos;profile&apos;);</div></pre></td></tr></table></figure>
+<h4 id="Contract：一系列接口，用来定义核心服务"><a href="#Contract：一系列接口，用来定义核心服务" class="headerlink" title="Contract：一系列接口，用来定义核心服务"></a>Contract：一系列接口，用来定义核心服务</h4><p>每个contract都会有对应的实现。</p>
+<p>Laravel的facade和辅助函数提供了使用Laravel服务的简单方式，而不必type-hint和从服务容器中解析。</p>
+
       
     </div>
 
@@ -640,7 +646,7 @@ $this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container-：绑定和解析"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)：绑定和解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务提供者-Service-Provider"><span class="nav-number">3.</span> <span class="nav-text">服务提供者(Service Provider)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求的生命周期-Request-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">请求的生命周期(Request Lifecycle)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务容器-Service-Container-：绑定和解析"><span class="nav-number">2.</span> <span class="nav-text">服务容器(Service Container)：绑定和解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务提供者-Service-Provider"><span class="nav-number">3.</span> <span class="nav-text">服务提供者(Service Provider)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Facade：服务容器中的类的静态接口"><span class="nav-number">4.</span> <span class="nav-text">Facade：服务容器中的类的静态接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Contract：一系列接口，用来定义核心服务"><span class="nav-number">5.</span> <span class="nav-text">Contract：一系列接口，用来定义核心服务</span></a></li></ol></div>
             
 
           </div>
