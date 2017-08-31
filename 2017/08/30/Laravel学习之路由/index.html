@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
+<meta name="description" content="本篇博客记录了Laravel的路由相关知识点，路由是非常重要的部分。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在ubuntu上搭建PHP7+Mysql+NGinx">
-<meta property="og:url" content="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/index.html">
+<meta property="og:title" content="Laravel学习之路由">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/Laravel学习之路由/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
-<meta property="og:updated_time" content="2017-08-28T15:01:34.938Z">
+<meta property="og:description" content="本篇博客记录了Laravel的路由相关知识点，路由是非常重要的部分。">
+<meta property="og:updated_time" content="2017-08-31T12:46:11.289Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在ubuntu上搭建PHP7+Mysql+NGinx">
-<meta name="twitter:description" content="本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。">
+<meta name="twitter:title" content="Laravel学习之路由">
+<meta name="twitter:description" content="本篇博客记录了Laravel的路由相关知识点，路由是非常重要的部分。">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/30/Laravel学习之路由/"/>
 
 
 
 
 
-  <title>在ubuntu上搭建PHP7+Mysql+NGinx | 用心去飞翔</title>
+  <title>Laravel学习之路由 | 用心去飞翔</title>
   
 
 
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/Laravel学习之路由/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="蚂蚁">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">在ubuntu上搭建PHP7+Mysql+NGinx</h1>
+          <h1 class="post-title" itemprop="name headline">Laravel学习之路由</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T21:41:05+08:00">
-                2017-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T21:23:17+08:00">
+                2017-08-30
               </time>
             
 
@@ -386,86 +386,27 @@
       
 
       
-        <p>本文记录下在Ubuntu环境下搭建PHP的开发环境，通过搭建PHP7+MySQL+Nginx来打造学习PHP的环境。</p>
+        <p>本篇博客记录了Laravel的路由相关知识点，路由是非常重要的部分。</p>
 <a id="more"></a>
-<h4 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h4><ul>
-<li><p>安装Nginx</p>
-<pre><code>sudo apt-get undate
-
-sudo apt-get install nginx
-</code></pre></li>
-<li><p>配置Nginx    </p>
-<pre><code>打开`/etc/nginx/sites-avaliable/default`文件，修改`root`、`index`、`location`，增加`location ~ php$`部分，重启Nginx：`sudo service nginx restart`。配置文件如下：
-
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
-    #root为项目代码所在目录
-    #index在中间添加index.php
-    root /websites;
-    index index.php index.html index.htm;
-    # Make site accessible from http://localhost/
-    #填写外网IP或者自己已经解析的域名
-    server_name http://www.somethingaboutchina.com;
-    #更改未被注释一行
-
-    location / {
-        # First attempt to serve request as file, then
-        # as directory, then fall back to displaying a 404.
-        try_files $uri $uri/ /index.php?$query_string;
-        # Uncomment to enable naxsi on this location
-        # include /etc/nginx/naxsi.rules
-    }
-    #添加下面代码
-    location ~ \.php$ {
-        try_files $uri /index.php =404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-}
-</code></pre></li>
-</ul>
-<h4 id="安装PHP7"><a href="#安装PHP7" class="headerlink" title="安装PHP7"></a>安装PHP7</h4><ul>
-<li><p>添加PPA:PPA，表示 Personal Package Archives，也就是个人软件包集</p>
-<pre><code>sudo apt-get install python-software-properties software-properties-common
-sudo add-apt-repository ppa:ondrej/php
-sudo apt-get update
-</code></pre></li>
-<li><p>安装PHP7以及所需的一些扩展</p>
-<pre><code>sudo apt-get install php7.0-fpm php7.0-cli php7.0-mcrypt php7.0-mysql php7.0-mbstring php7.0-xml
-</code></pre></li>
-<li><p>配置PHP7</p>
-<pre><code>1. 打开`php.ini`配置文件，找到`cgi.fix_pathinfo`选项，去掉注释，然后将值设置为0 (vim使用“/”进入查找模式)
-
-    `sudo vim /etc/php/7.0/fpm/php.ini`
-
-2. 启用php7.0-mcrypt
-
-    `sudo phpenmod mcrypt`
-
-3. 重启php7.0-fpm
-
-    `sudo service php7.0-fpm restart`
-</code></pre></li>
-</ul>
-<h4 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h4><ul>
-<li><p>安装Mysql</p>
-<pre><code>sudo apt-get install mysql-server-5.7 mysql-client-5.7
-</code></pre></li>
-</ul>
-<h4 id="安装Composer"><a href="#安装Composer" class="headerlink" title="安装Composer"></a>安装Composer</h4><ul>
-<li><p>安装Composer：</p>
-<pre><code>到[Composer官网](https://getcomposer.org/)下载`composer.phar`
-
-sudo mv composer.phar /usr/local/bin/composer
-</code></pre></li>
-<li><p>替换Composer源</p>
-<pre><code>`composer config -g repo.packagist composer https://packagist.phpcomposer.com`
-</code></pre></li>
-</ul>
+<h4 id="基本的路由"><a href="#基本的路由" class="headerlink" title="基本的路由"></a>基本的路由</h4><p>最基本的路由是接收一个URI和闭包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;basic&apos;,function () &#123;</div><div class="line">    return &apos;Hello World&apos;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>所有的路由都是定义在路由文件中，位于<code>routes</code>目录下，路由文件会被框架自动加载。<code>routes/web.php</code>文件为web接口定义了路由，这些路由被分配给<code>web</code>中间件组(提供了session状态和CSRF保护)。<code>routes/api.php</code>文件中的路由是无状态的，会被分配给<code>api</code>中间件组。</p>
+<p>路由器可以让你注册对应的路由来响应任何的HTTP动词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get($uri, $callback);</div><div class="line">Route::post($uri, $callback);</div><div class="line">Route::put($uri, $callback);</div><div class="line">Route::patch($uri, $callback);</div><div class="line">Route::delete($uri, $callback);</div><div class="line">Route::options($uri, $callback);</div></pre></td></tr></table></figure>
+<p>可以使用<code>match</code>方法注册路由来响应多个HTTP动词，或者使用<code>any</code>方法注册路由来响应任何HTTP动词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::match([&apos;get&apos;,&apos;post&apos;],&apos;/basic/match&apos;,function() &#123;</div><div class="line">    return &quot;/basic/match&quot;;</div><div class="line">&#125;);</div><div class="line">Route::any(&apos;/basic/any&apos;,function() &#123;</div><div class="line">    return &quot;/basic/any&quot;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>指向<code>web</code>路由文件中路由的HTML表单应该包含一个CSRF token域，否则的话，请求会被拒绝。</p>
+<h4 id="路由参数"><a href="#路由参数" class="headerlink" title="路由参数"></a>路由参数</h4><p>如果需要从路由中获取URI的片段，可以定义路由参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;user/&#123;id&#125;&apos;,function ($id) &#123;</div><div class="line">    return &apos;User &apos;.$id;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>可以定义许多路由参数，路由参数总是包含在大括号里，路由参数会基于顺序被注入到路由回掉或控制器中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;/user/&#123;group&#125;/&#123;team&#125;&apos;,function ($group,$team) &#123;</div><div class="line">    return &apos;group &apos;.$group.&apos; team &apos;.$team;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>如果需要声明一个路由参数是可选的，可以在参数名后面放一个问号，并且该参数对应的变量值要有一个默认值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;/option/&#123;name?&#125;/age&apos;,function ($name = &apos;God&apos;) &#123;</div><div class="line">    return $name;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>可以使用路由实例的<code>where</code>方法来约束路由参数的格式，该方法接收参数的名称和约束参数的正则表达式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;user/&#123;id&#125;&apos;,function ($id) &#123;</div><div class="line">    return &apos;user &apos;.$id;</div><div class="line">&#125;)-&gt;where(&apos;id&apos;,&apos;[0-9]+&apos;);</div><div class="line"></div><div class="line">Route::get(&apos;user/&#123;id&#125;/&#123;name&#125;&apos;,function ($id,$name)&#123;</div><div class="line">    return &apos;id &apos;.$id.&apos; name &apos;.$name;</div><div class="line">&#125;)-&gt;where([&apos;id&apos;=&gt;&apos;[0-9]+&apos;,&apos;name&apos;=&gt;&apos;[a-z]+&apos;]);</div></pre></td></tr></table></figure>
+<p>如果想要一个路由参数总是被给定的正则表达式约束(全局约束)，那么可以使用<code>pattern</code>方法。应该在<code>RouteServiceProvider</code>的<code>boot</code>方法里定义这些<code>pattern</code>方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function boot()&#123;</div><div class="line">    Route::pattern(&apos;id&apos;,&apos;[0-9]+&apos;);</div><div class="line">    parent::boot();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="命名的路由"><a href="#命名的路由" class="headerlink" title="命名的路由"></a>命名的路由</h4><h4 id="路由组"><a href="#路由组" class="headerlink" title="路由组"></a>路由组</h4><h4 id="路由模型绑定"><a href="#路由模型绑定" class="headerlink" title="路由模型绑定"></a>路由模型绑定</h4><p>####</p>
 
       
     </div>
@@ -502,8 +443,8 @@ sudo mv composer.phar /usr/local/bin/composer
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/03/iOS相关问题/" rel="next" title="iOS相关问题">
-                <i class="fa fa-chevron-left"></i> iOS相关问题
+              <a href="/2017/08/29/Vue的入门学习/" rel="next" title="Vue的入门学习">
+                <i class="fa fa-chevron-left"></i> Vue的入门学习
               </a>
             
           </div>
@@ -511,10 +452,6 @@ sudo mv composer.phar /usr/local/bin/composer
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/25/PHP基础知识点回顾/" rel="prev" title="PHP基础知识点回顾">
-                PHP基础知识点回顾 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -634,7 +571,7 @@ sudo mv composer.phar /usr/local/bin/composer
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Nginx"><span class="nav-number">1.</span> <span class="nav-text">安装Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP7"><span class="nav-number">2.</span> <span class="nav-text">安装PHP7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Mysql"><span class="nav-number">3.</span> <span class="nav-text">安装Mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Composer"><span class="nav-number">4.</span> <span class="nav-text">安装Composer</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本的路由"><span class="nav-number">1.</span> <span class="nav-text">基本的路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路由参数"><span class="nav-number">2.</span> <span class="nav-text">路由参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命名的路由"><span class="nav-number">3.</span> <span class="nav-text">命名的路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路由组"><span class="nav-number">4.</span> <span class="nav-text">路由组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路由模型绑定"><span class="nav-number">5.</span> <span class="nav-text">路由模型绑定</span></a></li></ol></div>
             
 
           </div>
