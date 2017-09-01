@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="#这里写上文章显示的摘要">
+<meta name="description" content="这篇文件记录了学习Laravel控制器的相关知识。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Laravel学习之控制器">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/Laravel学习之控制器/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="#这里写上文章显示的摘要">
-<meta property="og:updated_time" content="2017-08-31T23:42:10.726Z">
+<meta property="og:description" content="这篇文件记录了学习Laravel控制器的相关知识。">
+<meta property="og:updated_time" content="2017-09-01T16:02:07.101Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel学习之控制器">
-<meta name="twitter:description" content="#这里写上文章显示的摘要">
+<meta name="twitter:description" content="这篇文件记录了学习Laravel控制器的相关知识。">
 
 
 
@@ -335,6 +335,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,10 +386,26 @@
       
 
       
-        <p>#这里写上文章显示的摘要</p>
+        <p>这篇文件记录了学习Laravel控制器的相关知识。</p>
 <a id="more"></a>
-<p>#这里写上正文</p>
-
+<p>将所有的请求处理逻辑作为闭包定义在路由文件中是很不合理的，相反，应该使用控制器类来组织。控制器类可以将相关的请求处理逻辑放在单一类中。控制器存放在<code>app/Http/Controller</code>目录下。</p>
+<h4 id="基本的控制器"><a href="#基本的控制器" class="headerlink" title="基本的控制器"></a>基本的控制器</h4><p>定义一个控制器，继承自Laravel包含的基控制器，该基类提供了一些便利方法，例如<code>middleware</code>方法，用来将中间件放在控制器动作上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">namespace App\Http\Controllers;</div><div class="line"></div><div class="line">class UserController extends Controller &#123;</div><div class="line">    public function show($age) &#123;</div><div class="line">        return view(&apos;user.profile&apos;,[&apos;username&apos; =&gt; &apos;Weichuang&apos;,&apos;age&apos; =&gt; $age]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>定义一个路由来调用这个控制器动作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;user/&#123;age&#125;&apos;,&apos;UserController@show&apos;);</div></pre></td></tr></table></figure>
+<p>当请求匹配该路由URI时，<code>UserController</code>类的<code>show</code>方法就会被执行，路由参数也会被传递给该方法。</p>
+<p>注意：在定义控制器路由时，不必写出完整的控制器命名空间。因为<code>RouteService</code>是在路由组中加载文件，已经包含了命名空间，因此只需声明命名空间<code>App\Http\Controllers</code>后面的部分。</p>
+<p>如果定义只处理单个动作的控制器，可以在控制器中放<code>__invoke</code>方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">class ShowProfile extends Controller</div><div class="line">&#123;</div><div class="line"></div><div class="line">    public function __invoke($id)</div><div class="line">    &#123;</div><div class="line">        return view(&apos;user.profile&apos;, [&apos;user&apos; =&gt; User::findOrFail($id)]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为单个动作控制器注册路由时，不必声明方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;user/&#123;id&#125;&apos;, &apos;ShowProfile&apos;);</div></pre></td></tr></table></figure>
+<h4 id="控制器中间件"><a href="#控制器中间件" class="headerlink" title="控制器中间件"></a>控制器中间件</h4><p>中间件可以分配给路由文件中的控制器路由：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;profile&apos;, &apos;UserController@show&apos;)-&gt;middleware(&apos;auth&apos;);</div></pre></td></tr></table></figure>
+<p>或者，在控制器的构造函数中声明中间件。在控制器的构造函数中，使用<code>middleware</code>方法可以将中间件分配给控制器的动作。甚至可以将中间件限制到控制器的特定方法上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function __construct()</div><div class="line">   &#123;</div><div class="line">       $this-&gt;middleware(&apos;auth&apos;);</div><div class="line"></div><div class="line">       $this-&gt;middleware(&apos;log&apos;)-&gt;only(&apos;index&apos;);</div><div class="line"></div><div class="line">       $this-&gt;middleware(&apos;subscribed&apos;)-&gt;except(&apos;store&apos;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>控制器也允许你使用闭包来注册中间件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$this-&gt;middleware(function ($request, $next) &#123;</div><div class="line">    // ...</div><div class="line"></div><div class="line">    return $next($request);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="资源控制器"><a href="#资源控制器" class="headerlink" title="资源控制器"></a>资源控制器</h4>
       
     </div>
 
@@ -458,8 +496,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400"
@@ -512,6 +559,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本的控制器"><span class="nav-number">1.</span> <span class="nav-text">基本的控制器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制器中间件"><span class="nav-number">2.</span> <span class="nav-text">控制器中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源控制器"><span class="nav-number">3.</span> <span class="nav-text">资源控制器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
