@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="本篇博客记录在学习、开发iOS过程中遇到的一些问题，通过记录这些问题，能够减少以后可能会遇到相同问题解决的时间。">
+<meta name="description" content="#这里写上文章显示的摘要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS相关问题">
-<meta property="og:url" content="http://yoursite.com/2017/07/03/iOS相关问题/index.html">
+<meta property="og:title" content="Vue学习之组件Component">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/Vue学习之组件Component/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="本篇博客记录在学习、开发iOS过程中遇到的一些问题，通过记录这些问题，能够减少以后可能会遇到相同问题解决的时间。">
-<meta property="og:updated_time" content="2017-09-02T13:43:41.984Z">
+<meta property="og:description" content="#这里写上文章显示的摘要">
+<meta property="og:updated_time" content="2017-09-04T15:04:23.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS相关问题">
-<meta name="twitter:description" content="本篇博客记录在学习、开发iOS过程中遇到的一些问题，通过记录这些问题，能够减少以后可能会遇到相同问题解决的时间。">
+<meta name="twitter:title" content="Vue学习之组件Component">
+<meta name="twitter:description" content="#这里写上文章显示的摘要">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/03/iOS相关问题/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/Vue学习之组件Component/"/>
 
 
 
 
 
-  <title>iOS相关问题 | 用心去飞翔</title>
+  <title>Vue学习之组件Component | 用心去飞翔</title>
   
 
 
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/iOS相关问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/Vue学习之组件Component/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="蚂蚁">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS相关问题</h1>
+          <h1 class="post-title" itemprop="name headline">Vue学习之组件Component</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T13:22:55+08:00">
-                2017-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T21:48:52+08:00">
+                2017-09-04
               </time>
             
 
@@ -334,28 +334,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/问题记录/" itemprop="url" rel="index">
-                    <span itemprop="name">问题记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -386,10 +364,23 @@
       
 
       
-        <p>本篇博客记录在学习、开发iOS过程中遇到的一些问题，通过记录这些问题，能够减少以后可能会遇到相同问题解决的时间。</p>
+        <p>#这里写上文章显示的摘要</p>
 <a id="more"></a>
-<h4 id="1-使用Autolayout在同一行同时约束两个控件-没有约束宽度-，当第二个控件内容太多时，第一个控件内容无法完全显示。"><a href="#1-使用Autolayout在同一行同时约束两个控件-没有约束宽度-，当第二个控件内容太多时，第一个控件内容无法完全显示。" class="headerlink" title="1.使用Autolayout在同一行同时约束两个控件(没有约束宽度)，当第二个控件内容太多时，第一个控件内容无法完全显示。"></a>1.使用Autolayout在同一行同时约束两个控件(没有约束宽度)，当第二个控件内容太多时，第一个控件内容无法完全显示。</h4><pre><code>解答：通过设置两个控件的Content Hugging Priority(控件被拉伸的优先级)和Content Compression Resistance Priority(控件抗压缩的压缩的优先级)
-</code></pre>
+<p>组件是Vue最强大的特点之一，帮助你扩展基本的HTML元素来封装可重用的代码。从更高层次来说，组件是自定义的元素，Vue的编译器向上面添加特定的行为。有些情况下，它们也可能是原生的HTML元素，上面带有<code>is</code>属性。</p>
+<h4 id="使用组件"><a href="#使用组件" class="headerlink" title="使用组件"></a>使用组件</h4><p>使用<code>Vue.component(tagName,options)</code>来注册全局的组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Vue.component(&apos;my-component&apos;, &#123;</div><div class="line">  // options</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>不必将每个组件都进行全局注册。可以使用<code>components</code>实例选项来进行局部注册，这样的话，注册的组件只能在组件作用域内可见。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var Child = &#123;</div><div class="line">  template: &apos;&lt;div&gt;A custom component!&lt;/div&gt;&apos;</div><div class="line">&#125;</div><div class="line">new Vue(&#123;</div><div class="line">  // ...</div><div class="line">  components: &#123;</div><div class="line">    // &lt;my-component&gt; will only be available in parent&apos;s template</div><div class="line">    &apos;my-component&apos;: Child</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>传递给Vue构造器的大多数选项都可以永在组件中，但是有个特殊，<code>data</code>是函数。</p>
+<h4 id="复合组件"><a href="#复合组件" class="headerlink" title="复合组件"></a>复合组件</h4><p>组件通常是父子组件的关系，父子组件通信的方法：父组件通过<code>props</code>将数据传递给子组件，子组件通过<code>events</code>发送通知给父组件。</p>
+<h4 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h4><p>每个组件实例都有自己的孤立作用域，意味着不能在子组件的模板中直接引用父组件的数据。可以使用<code>props</code>来将数据传递给子组件。</p>
+<p><code>prop</code>是自定义的属性，将父组件的信息传递下去。子组件需要显示地声明它希望从父组件中接收到哪些props，使用<code>props</code>选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Vue.component(&apos;child&apos;, &#123;</div><div class="line">  // declare the props</div><div class="line">  props: [&apos;message&apos;],</div><div class="line">  // just like data, the prop can be used inside templates</div><div class="line">  // and is also made available in the vm as this.message</div><div class="line">  template: &apos;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&apos;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>下面，传递字符串给上面定义的组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;child message=&quot;hello!&quot;&gt;&lt;/child&gt;</div></pre></td></tr></table></figure>
+<p>可以使用<code>v-bind</code>动态地将props绑定到父组件的数据上。父组件的数据发生改变的时候，会自动地流到子组件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;div&gt;</div><div class="line">  &lt;input v-model=&quot;parentMsg&quot;&gt;</div><div class="line">  &lt;br&gt;</div><div class="line">  &lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<h4 id="自定义的事件"><a href="#自定义的事件" class="headerlink" title="自定义的事件"></a>自定义的事件</h4><h4 id="使用槽-Slot-进行内容分发"><a href="#使用槽-Slot-进行内容分发" class="headerlink" title="使用槽(Slot)进行内容分发"></a>使用槽(Slot)进行内容分发</h4>
       
     </div>
 
@@ -425,14 +416,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/09/02/Laravel学习之编译资源/" rel="next" title="Laravel学习之编译资源">
+                <i class="fa fa-chevron-left"></i> Laravel学习之编译资源
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/24/在ubuntu上搭建PHP7-Mysql-NGinx/" rel="prev" title="在ubuntu上搭建PHP7+Mysql+NGinx">
-                在ubuntu上搭建PHP7+Mysql+NGinx <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/04/WordPress开发教程-三-之开发主题/" rel="prev" title="WordPress开发教程(三)之开发主题">
+                WordPress开发教程(三)之开发主题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -553,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用Autolayout在同一行同时约束两个控件-没有约束宽度-，当第二个控件内容太多时，第一个控件内容无法完全显示。"><span class="nav-number">1.</span> <span class="nav-text">1.使用Autolayout在同一行同时约束两个控件(没有约束宽度)，当第二个控件内容太多时，第一个控件内容无法完全显示。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用组件"><span class="nav-number">1.</span> <span class="nav-text">使用组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复合组件"><span class="nav-number">2.</span> <span class="nav-text">复合组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Props"><span class="nav-number">3.</span> <span class="nav-text">Props</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义的事件"><span class="nav-number">4.</span> <span class="nav-text">自定义的事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用槽-Slot-进行内容分发"><span class="nav-number">5.</span> <span class="nav-text">使用槽(Slot)进行内容分发</span></a></li></ol></div>
             
 
           </div>
