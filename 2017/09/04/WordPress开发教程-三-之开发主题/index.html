@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/04/WordPress开发教程-三-之开发主题/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="#这里写上文章显示的摘要">
-<meta property="og:updated_time" content="2017-09-04T15:15:16.623Z">
+<meta property="og:updated_time" content="2017-09-05T13:44:06.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WordPress开发教程(三)之开发主题">
 <meta name="twitter:description" content="#这里写上文章显示的摘要">
@@ -366,7 +366,18 @@
       
         <p>#这里写上文章显示的摘要</p>
 <a id="more"></a>
-<p>#这里写上正文</p>
+<p>WordPress主题是一系列文件，在底层统一的设计下，共同协作来构建一个图形化界面。简单地说，主题为你的网站提供了皮肤，允许你修改内容展示的方式。</p>
+<p>在这篇教程中，我们将学习主题开发。首先了解组成主题的基本文件，接着学习模板，模板标签和循环。</p>
+<h4 id="开始学习"><a href="#开始学习" class="headerlink" title="开始学习"></a>开始学习</h4><p>主题通常存放在<code>wp-conent/themes</code>目录中。如果进入到那个目录，你会发现里面已经有了几个主题，那是默认的WordPress主题。</p>
+<p>下面让我们来创建一个新的主题：</p>
+<ul>
+<li>在<code>themes</code>目录下创建文件夹，命名为<code>my-awesome-theme</code></li>
+</ul>
+<ul>
+<li>在新的文件夹里，创建两个文件：<code>style.css</code>和<code>index.php</code></li>
+</ul>
+<p>打开样式表文件，粘贴下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*</div><div class="line">Theme Name: Awesome Theme</div><div class="line">Theme URI: http://somethingaboutchina.com</div><div class="line">Author: wcshinestar</div><div class="line">Author URI: https://antmoving.github.io</div><div class="line">Description: Awesome Theme brings your site to life with immersive featured images and subtle animations. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.</div><div class="line">Version: 1.0</div><div class="line">License: GNU General Public License v2 or later</div><div class="line">License URI: http://www.gnu.org/licenses/gpl-2.0.html</div><div class="line">Text Domain: awesome theme</div><div class="line">Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready</div><div class="line">This theme, like WordPress, is licensed under the GPL.</div><div class="line">Use it to make something cool, have fun, and share what you&apos;ve learned with others.</div><div class="line">*/</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -458,8 +469,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400"
@@ -512,6 +532,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始学习"><span class="nav-number">1.</span> <span class="nav-text">开始学习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
