@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/04/WordPress开发教程-三-之开发主题/index.html">
 <meta property="og:site_name" content="用心去飞翔">
 <meta property="og:description" content="#这里写上文章显示的摘要">
-<meta property="og:updated_time" content="2017-09-05T13:44:06.054Z">
+<meta property="og:updated_time" content="2017-09-05T14:20:17.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WordPress开发教程(三)之开发主题">
 <meta name="twitter:description" content="#这里写上文章显示的摘要">
@@ -376,8 +376,14 @@
 <ul>
 <li>在新的文件夹里，创建两个文件：<code>style.css</code>和<code>index.php</code></li>
 </ul>
-<p>打开样式表文件，粘贴下面的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*</div><div class="line">Theme Name: Awesome Theme</div><div class="line">Theme URI: http://somethingaboutchina.com</div><div class="line">Author: wcshinestar</div><div class="line">Author URI: https://antmoving.github.io</div><div class="line">Description: Awesome Theme brings your site to life with immersive featured images and subtle animations. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.</div><div class="line">Version: 1.0</div><div class="line">License: GNU General Public License v2 or later</div><div class="line">License URI: http://www.gnu.org/licenses/gpl-2.0.html</div><div class="line">Text Domain: awesome theme</div><div class="line">Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready</div><div class="line">This theme, like WordPress, is licensed under the GPL.</div><div class="line">Use it to make something cool, have fun, and share what you&apos;ve learned with others.</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>打开样式表文件，粘贴下面的代码 <a href="https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/" target="_blank" rel="external">官方实例代码</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*</div><div class="line">Theme Name: Awesome Theme</div><div class="line">Theme URI: http://somethingaboutchina.com</div><div class="line">Author: wcshinestar</div><div class="line">Author URI: https://antmoving.github.io</div><div class="line">Description: Awesome Theme brings your site to life with immersive featured images and subtle animations. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.</div><div class="line">Version: 1.0</div><div class="line">License: GNU General Public License v2 or later</div><div class="line">License URI: http://www.gnu.org/licenses/gpl-2.0.html</div><div class="line">Text Domain: my-awesome-theme</div><div class="line">Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready</div><div class="line">This theme, like WordPress, is licensed under the GPL.</div><div class="line">Use it to make something cool, have fun, and share what you&apos;ve learned with others.</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>上面的信息会自动填充WordPress后台的<code>Appearance &gt; Theme</code>页面中的”主题详情”部分。上面的评论中必须要包含主题的名字(其它是可选的，但是推荐填完所有信息)。注意：<code>text Domain</code>必须要准确匹配文件夹的名字(本例子中是<code>my-awesome-theme</code>)。</p>
+<p>现在如果你导航到<code>Appearance -&gt; Themes</code>部分，应该可以看到你的主题出现在列表中，甚至可以启动它。</p>
+<h4 id="模板的工作原理"><a href="#模板的工作原理" class="headerlink" title="模板的工作原理"></a>模板的工作原理</h4><p>WordPress主题使用模板文件进行工作的，它实际上是很巧妙的方法，与普通的HTML网站比较，它减少了网站运行需要的文件数量。如果你有一个HTML网站，对于每篇发表的文章都需要一个文件；而每个文件包含网站的头部(<code>header</code>)，侧边栏(<code>sidebar</code>)和尾部(<code>footer</code>)，对于每个文件来说，这都是相同的；唯一的不同之处是文章的内容。</p>
+<p>因为PHP是在服务端处理的，我们可以更好地节约文件占有的空间。我们可以只拥有一个文件(模板文件)，检测到所在的页面，要求PHP根据实际的文章标题和内容来取代占位符。</p>
+<p>下面使用伪代码来展示如何工作的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;A single post template&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">  &lt;div id=&quot;site-header&quot;&gt;</div><div class="line">    &lt;h1&gt;Welcome to my site&lt;/h1&gt;</div><div class="line">    &lt;nav&gt;</div><div class="line">      &lt;ul&gt;</div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Home&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;About&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Contact&lt;/a&gt;&lt;/li&gt;  </div><div class="line">      &lt;/ul&gt;  </div><div class="line">    &lt;/nav&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">  &lt;div id=&quot;article&quot;&gt;</div><div class="line">    &lt;h2 class=&quot;article-title&quot;&gt;&lt;?php the_title() ?&gt;&lt;/h2&gt;</div><div class="line">    &lt;div class=&quot;article-content&quot;&gt;&lt;?php the_content() ?&gt;&lt;/div&gt;</div><div class="line">    &lt;div class=&quot;article-meta&quot;&gt;Published on &lt;?php the_time( &quot;Y-m-d&quot; ) ?&gt; by &lt;?php the_author() ?&gt;&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">  &lt;div id=&quot;site-footer&quot;&gt;</div><div class="line">    &lt;nav&gt;</div><div class="line">      &lt;ul&gt;</div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Home&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;About&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Contact&lt;/a&gt;&lt;/li&gt;  </div><div class="line">      &lt;/ul&gt;  </div><div class="line">    &lt;/nav&gt;</div><div class="line">    &lt;div id=&quot;copyright&quot;&gt;&amp;copy; Daniel Pataki&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -423,6 +429,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/05/PHP流程控制的替代语法/" rel="prev" title="PHP流程控制的替代语法">
+                PHP流程控制的替代语法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -494,7 +504,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -542,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始学习"><span class="nav-number">1.</span> <span class="nav-text">开始学习</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始学习"><span class="nav-number">1.</span> <span class="nav-text">开始学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板的工作原理"><span class="nav-number">2.</span> <span class="nav-text">模板的工作原理</span></a></li></ol></div>
             
 
           </div>
