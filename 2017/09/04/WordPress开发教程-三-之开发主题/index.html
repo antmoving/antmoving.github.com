@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="#这里写上文章显示的摘要">
+<meta name="description" content="这篇博客介绍如何开发一个简单的WordPress主题，以及构成主题的相关文件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WordPress开发教程(三)之开发主题">
 <meta property="og:url" content="http://yoursite.com/2017/09/04/WordPress开发教程-三-之开发主题/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="#这里写上文章显示的摘要">
-<meta property="og:updated_time" content="2017-09-05T14:20:17.849Z">
+<meta property="og:description" content="这篇博客介绍如何开发一个简单的WordPress主题，以及构成主题的相关文件。">
+<meta property="og:updated_time" content="2017-09-06T16:00:29.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WordPress开发教程(三)之开发主题">
-<meta name="twitter:description" content="#这里写上文章显示的摘要">
+<meta name="twitter:description" content="这篇博客介绍如何开发一个简单的WordPress主题，以及构成主题的相关文件。">
 
 
 
@@ -335,6 +335,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,7 +386,7 @@
       
 
       
-        <p>#这里写上文章显示的摘要</p>
+        <p>这篇博客介绍如何开发一个简单的WordPress主题，以及构成主题的相关文件。</p>
 <a id="more"></a>
 <p>WordPress主题是一系列文件，在底层统一的设计下，共同协作来构建一个图形化界面。简单地说，主题为你的网站提供了皮肤，允许你修改内容展示的方式。</p>
 <p>在这篇教程中，我们将学习主题开发。首先了解组成主题的基本文件，接着学习模板，模板标签和循环。</p>
@@ -384,6 +406,67 @@
 <p>因为PHP是在服务端处理的，我们可以更好地节约文件占有的空间。我们可以只拥有一个文件(模板文件)，检测到所在的页面，要求PHP根据实际的文章标题和内容来取代占位符。</p>
 <p>下面使用伪代码来展示如何工作的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;A single post template&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">  &lt;div id=&quot;site-header&quot;&gt;</div><div class="line">    &lt;h1&gt;Welcome to my site&lt;/h1&gt;</div><div class="line">    &lt;nav&gt;</div><div class="line">      &lt;ul&gt;</div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Home&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;About&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Contact&lt;/a&gt;&lt;/li&gt;  </div><div class="line">      &lt;/ul&gt;  </div><div class="line">    &lt;/nav&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">  &lt;div id=&quot;article&quot;&gt;</div><div class="line">    &lt;h2 class=&quot;article-title&quot;&gt;&lt;?php the_title() ?&gt;&lt;/h2&gt;</div><div class="line">    &lt;div class=&quot;article-content&quot;&gt;&lt;?php the_content() ?&gt;&lt;/div&gt;</div><div class="line">    &lt;div class=&quot;article-meta&quot;&gt;Published on &lt;?php the_time( &quot;Y-m-d&quot; ) ?&gt; by &lt;?php the_author() ?&gt;&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">  &lt;div id=&quot;site-footer&quot;&gt;</div><div class="line">    &lt;nav&gt;</div><div class="line">      &lt;ul&gt;</div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Home&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;About&lt;/a&gt;&lt;/li&gt;  </div><div class="line">        &lt;li&gt;&lt;a href=&apos;&apos;&gt;Contact&lt;/a&gt;&lt;/li&gt;  </div><div class="line">      &lt;/ul&gt;  </div><div class="line">    &lt;/nav&gt;</div><div class="line">    &lt;div id=&quot;copyright&quot;&gt;&amp;copy; Daniel Pataki&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  </div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>在文章区域没有进行任何的硬编码，<code>the_title()</code>函数负责输出题目。这些函数检测到当前请求的文章，在数据库中查询正确的信息。</p>
+<p>这样，网站的所有文章只需创建一个文件。许多系统，包括WordPress，都采取这样的方式，将网站的头部和尾部分离开。实际上，管理文章的文件更有可能像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php get_header() ?&gt;</div><div class="line"></div><div class="line">&lt;div id=&quot;article&quot;&gt;</div><div class="line">  &lt;h2 class=&quot;article-title&quot;&gt;&lt;?php the_title() ?&gt;&lt;/h2&gt;</div><div class="line">  &lt;div class=&quot;article-content&quot;&gt;&lt;?php the_content() ?&gt;&lt;/div&gt;</div><div class="line">  &lt;div class=&quot;article-meta&quot;&gt;Published on &lt;?php the_time( &quot;Y-m-d&quot; ) ?&gt; by &lt;?php the_author() ?&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;?php get_sidebar() ?&gt;</div><div class="line"></div><div class="line">&lt;?php get_footer() ?&gt;</div></pre></td></tr></table></figure>
+<h4 id="主题的工作原理"><a href="#主题的工作原理" class="headerlink" title="主题的工作原理"></a>主题的工作原理</h4><p>我们将在主题中使用一些模板文件来搭建网站。我们要清楚为哪些页面创建哪些文件，这是由WordPress的模板层次管理的，让我们来看下页面的类型：</p>
+<ul>
+<li><p>Archive页面：<code>category archives</code>, <code>date archives</code>, <code>tag archives</code>, <code>author archives</code>等</p>
+</li>
+<li><p>Single页面：<code>single posts</code>, <code>single pages</code>, <code>single custom post types</code>等</p>
+</li>
+<li><p>Front页面和Index页面</p>
+</li>
+<li><p>错误页面</p>
+</li>
+<li><p>搜索结果页面</p>
+</li>
+</ul>
+<p>它称作层次，因为WordPress在决定显示某个特定的内容时，会进行寻找一系列文件。下面来看个例子：</p>
+<p>如果我们查看一个作者的归档页面，WordPress会检查在主题文件夹下是否存在名字是<code>author-wflytoc.php</code>的文件。如果存在，则使用；否则的话，WordPress会寻找包含作者ID的文件；假设ID是520，则使用的文件会是<code>author-520.php</code>；如果该文件也不存在，则WordPress会使用<code>author.php</code>文件；如果也不存在，则会使用<code>archive.php</code>文件；如果还不存在，则使用<code>index.php</code>(该文件是必须要存在的)。</p>
+<p>注意，WordPress一开始会寻找具体的文件，接着是一般的文件。这样的话，你可以创建一个文件(<code>author.php</code>)来处理所有的作者；但是可以使用<code>author-wflytoc.php</code>来让特定的作者展示的不同。</p>
+<h4 id="构建主题"><a href="#构建主题" class="headerlink" title="构建主题"></a>构建主题</h4><p>当构建新主题时，首先构建一个框架，也就是说先创建header和footer部分。</p>
+<p>到目前为止，我们创建了一个新的主题，里面包含了空的<code>index.php</code>文件和一个样式表。</p>
+<p>创建一个屏幕截图，这用来在WordPress后台的<code>Appearance -&gt; Themes</code>页面对主题的展示。需要将图片裁剪成<code>880px</code>宽，<code>660px</code>高；命名为<code>screenshot.png</code>；将其放在主题目录下。</p>
+<p>下一步创建主题的HTML框架，这包括<code>所有页面都需要加载</code>的代码，例如头部元素等。</p>
+<p>首先创建<code>header.php</code>文件，将下面的代码粘贴到里面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html &lt;?php language_attributes(); ?&gt; class=&quot;no-js&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;&lt;?php bloginfo( &apos;charset&apos; ); ?&gt;&quot;&gt;</div><div class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</div><div class="line">    &lt;link rel=&quot;profile&quot; href=&quot;http://gmpg.org/xfn/11&quot;&gt;</div><div class="line">    &lt;?php wp_head(); ?&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body &lt;?php body_class(); ?&gt;&gt;</div></pre></td></tr></table></figure>
+<p>创建<code>footer.php</code>文件，粘贴下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php wp_footer() ?&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>这里需要指出两个重要的函数：<code>wp_head()</code>和<code>wp_footer()</code>。你应当记住：制作主题时，必须在<code>&lt;/head&gt;</code>前放上<code>wp_header()</code>；在<code>&lt;/body&gt;</code>前放上<code>wp_footer()</code>；这些作为标志帮助WordPress和插件正确地注入功能到你的主题中。</p>
+<p>开始转向<code>index.php</code>文件；如果现在浏览网站的话，它是个空的屏幕。因为<code>index.php</code>文件是空的，<code>header.php</code>和<code>footer.php</code>文件没有被使用。</p>
+<p>添加下面的代码到<code>index.php</code>文件中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php get_header() ?&gt;</div><div class="line"></div><div class="line">My Awesome Theme</div><div class="line"></div><div class="line">&lt;?php get_footer() ?&gt;</div></pre></td></tr></table></figure>
+<p>下面来为主题添加样式，因为样式表不会被自动地加载。在创建HTML网站时，通常是在头部进行添加样式；在主题中永远不要这样做，应该让WordPress来处理它。</p>
+<p>创建<code>functions.php</code>文件，添加下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php</div><div class="line">add_action( &apos;wp_enqueue_scripts&apos;, &apos;mat_assets&apos; );</div><div class="line">function mat_assets() &#123;</div><div class="line">	wp_enqueue_style( &apos;my-awesome-theme&apos;, get_stylesheet_uri() );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要记住WordPress是如何将功能注入到主题中的，它操作的其中一个位置是在<code>wp_head()</code>函数中。上述的<code>functions.php</code>文件告诉WordPress关于我们的样式表，它会在头部添加正确的代码。</p>
+<p>下面我们来创建一个可视化的框架：网站标题和内容盒子。在<code>header.php</code>文件中添加标题，开启内容盒子；在<code>footer.php</code>文件中，关闭内容盒子，并添加尾部的copyright文字；最后，在样式表中添加一些样式。</p>
+<p><code>header.php</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html &lt;?php language_attributes(); ?&gt; class=&quot;no-js&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;&lt;?php bloginfo( &apos;charset&apos; ); ?&gt;&quot;&gt;</div><div class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</div><div class="line">    &lt;link rel=&quot;profile&quot; href=&quot;http://gmpg.org/xfn/11&quot;&gt;</div><div class="line">    &lt;?php wp_head(); ?&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body &lt;?php body_class(); ?&gt;&gt;</div><div class="line"></div><div class="line">&lt;div id=&quot;site-header&quot;&gt;</div><div class="line">    &lt;h1&gt;&lt;?php bloginfo(&apos;title&apos;) ?&gt;&lt;/h1&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div id=&quot;site-content&quot;&gt;</div></pre></td></tr></table></figure>
+<p><code>footer.php</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div id=&quot;site-rooter&quot;&gt;</div><div class="line">    &lt;p&gt;&amp;copy;My Awesome Theme&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;?php wp_footer() ?&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>style.css</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">html &#123;</div><div class="line">    height: 100%;</div><div class="line">    background:#444;</div><div class="line">    font-family: &quot;Helvetica Neue&quot;, Arial, sans-serif;</div><div class="line">    line-height: 1.5em;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#site-header &#123;</div><div class="line">    text-align: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#site-header h1 &#123;</div><div class="line">    font-size:32px;</div><div class="line">    color: #ffffff;</div><div class="line">    font-weight: 300;</div><div class="line">    letter-spacing: 1px;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#site-content &#123;</div><div class="line">    max-width:625px;</div><div class="line">    background: #fff;</div><div class="line">    margin: 0 auto;</div><div class="line">    padding: 22px;</div><div class="line">    border-radius:5px;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#site-footer &#123;</div><div class="line">    color: #fff;</div><div class="line">    text-align:center;</div><div class="line">    font-size:12px;</div><div class="line">    text-transform: uppercase;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除此之外，向<code>index.php</code>文件中添加一些内容。现在，参观网站的任何页面都将呈现相同的内容，因为目前只有<code>index.php</code>文件，它是所有页面的”退却文件(WordPress会为用户访问的页面寻找正确的文件来使用，寻找的过程是具有层级性的，最后会退却到index.php文件)”</p>
+<h4 id="理解WordPress的循环-Loop"><a href="#理解WordPress的循环-Loop" class="headerlink" title="理解WordPress的循环(Loop)"></a>理解WordPress的循环(Loop)</h4><p>循环是几乎所有WordPress页面的核心，包含了页面上展示的内容。WordPress从URL中获取每个页面需要包含哪些内容。例如，单篇博客页面应该包含一篇博客内容；主页面应该包含几篇最近的博客；分类归档页面应该包含几篇该类别下的最近的博客。</p>
+<p>信息是从数据库中自动抓取下来的，所要做的就是循环遍历获取到的所有文章。将下面代码粘贴到<code>index.php</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php if( have_posts() ) : ?&gt;</div><div class="line">    &lt;?php while( have_posts() ) : the_post() ?&gt;</div><div class="line">        &lt;h2&gt;&lt;a href=&apos;&lt;?php the_permalink() ?&gt;&apos;&gt;&lt;?php the_title() ?&gt;&lt;/a&gt;&lt;/h2&gt;</div><div class="line">        &lt;div class=&quot;content&quot;&gt;</div><div class="line">            &lt;?php the_content() ?&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    &lt;?php endwhile ?&gt;</div><div class="line">&lt;?php else : ?&gt;</div><div class="line">    &lt;p&gt;Oh No, there are no posts!&lt;/p&gt;</div><div class="line">&lt;?php endif ?&gt;</div></pre></td></tr></table></figure>
+<p>你将看到一系列文章出现到网站首页，如果点击文章的标题，文章的详情页面就会展示，尽管还没有为单篇文章创建对应的使用文件。</p>
+<p><code>if</code>语句用来检查<code>have_posts()</code>函数的值，如果有文章显示，则返回<code>true</code>；如果没有文章显示，则返回<code>false</code>。从<code>else</code>语句部分可以看出，如果没有文章，则展示一段文本。</p>
+<p>如果有文章显示，则创建<code>while</code>循环，只要<code>have_posts()</code>返回<code>true</code>，循环体就会执行。使用的第一个函数是<code>the_post()</code>，会搭建文章的一些数据，并在内部进行计数。</p>
+<p>展示文章时，上面的代码仅仅添加了标题和文章的完整内容。使用<code>the_permalink()</code>函数获取文章的URL；使用<code>the_title()</code>函数获取标题；使用<code>the_content()</code>函数获取文章的完整内容。这些类型的函数叫作模板标签，可以使用在循环中。</p>
+<h4 id="模板和if语句"><a href="#模板和if语句" class="headerlink" title="模板和if语句"></a>模板和if语句</h4><p>如果想要在首页中展示文章的摘要，可以有两种选择：使用条件标签和创建新的模板文件。</p>
+<p>WordPress的条件标签可以用来检查各种东西，例如，你可以检查当前所在的页面是否时单篇文章页面。</p>
+<p><code>is_singular()</code>标签可以完成下面的任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php get_header() ?&gt;</div><div class="line"></div><div class="line">&lt;?php if( have_posts() ) : ?&gt;</div><div class="line">    &lt;?php while( have_posts() ) : the_post() ?&gt;</div><div class="line">        &lt;h2&gt;&lt;a href=&apos;&lt;?php the_permalink() ?&gt;&apos;&gt;&lt;?php the_title() ?&gt;&lt;/a&gt;&lt;/h2&gt;</div><div class="line">        &lt;div class=&quot;content&quot;&gt;</div><div class="line">            &lt;?php if( is_singular() ) : ?&gt;</div><div class="line">                &lt;?php the_content() ?&gt;</div><div class="line">            &lt;?php else : ?&gt;</div><div class="line">                &lt;?php the_excerpt() ?&gt;</div><div class="line">            &lt;?php endif ?&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    &lt;?php endwhile ?&gt;</div><div class="line">&lt;?php else : ?&gt;</div><div class="line">    &lt;p&gt;Oh No, there are no posts!&lt;/p&gt;</div><div class="line">&lt;?php endif ?&gt;</div><div class="line"></div><div class="line">&lt;?php get_footer() ?&gt;</div></pre></td></tr></table></figure>
+<p>另一种途径是使用两个单独的文件：<code>index.php</code>包含显示摘要的多篇文章；而<code>single.php</code>展示完整的内容。创建<code>single.php</code>文件，在循环中使用<code>the_content()</code>。</p>
+<p>看一下修改过的<code>index.php</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php get_header() ?&gt;</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">if( have_posts() ) &#123;</div><div class="line">    while( have_posts() ) &#123;</div><div class="line">        the_post();</div><div class="line">        get_template_part( &apos;template-parts/content&apos;, &apos;&apos; );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else &#123;</div><div class="line">    get_template_part( &apos;template-parts/content&apos;, &apos;none&apos; );</div><div class="line">&#125;</div><div class="line">?&gt;</div><div class="line"></div><div class="line">&lt;?php get_footer() ?&gt;</div></pre></td></tr></table></figure>
+<p>上面代码中，将文章的内容放在不同的文件中，<code>get_template_part()</code>函数用于抓取文件中的内容；第二个参数与第一个参数使用<code>-</code>连接，构成一个路径；<code>else</code>语句中，函数将会调用<code>template-parts/content-none.php</code>。在<code>if</code>语句中，第二个参数是空的字符串，所以这将调用<code>template-parts/content.php</code>。</p>
+<p>在<code>single.php</code>文件中，添加相同的代码，但是使用<code>single</code>作为<code>get_template_part()</code>函数的第二个参数。</p>
+<p>最后，创建<code>template_parts</code>文件夹，和三个文件：<code>content.php</code>,<code>content-none.php</code>和<code>content-single.php</code>；并将相关的代码粘贴到对应的文件中，比如，<code>content.php</code>文件中的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;h2&gt;&lt;a href=&apos;&lt;?php the_permalink() ?&gt;&apos;&gt;&lt;?php the_title() ?&gt;&lt;/a&gt;&lt;/h2&gt;</div><div class="line">&lt;div class=&quot;content&quot;&gt;</div><div class="line">	&lt;?php the_excerpt() ?&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -504,7 +587,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -515,7 +598,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -552,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始学习"><span class="nav-number">1.</span> <span class="nav-text">开始学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板的工作原理"><span class="nav-number">2.</span> <span class="nav-text">模板的工作原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始学习"><span class="nav-number">1.</span> <span class="nav-text">开始学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板的工作原理"><span class="nav-number">2.</span> <span class="nav-text">模板的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主题的工作原理"><span class="nav-number">3.</span> <span class="nav-text">主题的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建主题"><span class="nav-number">4.</span> <span class="nav-text">构建主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#理解WordPress的循环-Loop"><span class="nav-number">5.</span> <span class="nav-text">理解WordPress的循环(Loop)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板和if语句"><span class="nav-number">6.</span> <span class="nav-text">模板和if语句</span></a></li></ol></div>
             
 
           </div>
