@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="这篇文章记录Laravel框架的基础数据库知识。">
+<meta name="description" content="Laravel因为它的易用性，可扩展性和灵活性，成为成长最快的PHP框架；而Vue是JavaScript社区中成长最快的前端库。而Laravel提供对Vue的直接支持。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Laravel学习之数据库(1)">
-<meta property="og:url" content="http://yoursite.com/2017/09/02/Laravel学习之数据库-1/index.html">
+<meta property="og:title" content="Laravel结合Vue的教程">
+<meta property="og:url" content="http://yoursite.com/2017/09/07/Laravel结合Vue的教程/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="这篇文章记录Laravel框架的基础数据库知识。">
-<meta property="og:updated_time" content="2017-09-02T03:47:06.704Z">
+<meta property="og:description" content="Laravel因为它的易用性，可扩展性和灵活性，成为成长最快的PHP框架；而Vue是JavaScript社区中成长最快的前端库。而Laravel提供对Vue的直接支持。">
+<meta property="og:updated_time" content="2017-09-07T15:23:24.662Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Laravel学习之数据库(1)">
-<meta name="twitter:description" content="这篇文章记录Laravel框架的基础数据库知识。">
+<meta name="twitter:title" content="Laravel结合Vue的教程">
+<meta name="twitter:description" content="Laravel因为它的易用性，可扩展性和灵活性，成为成长最快的PHP框架；而Vue是JavaScript社区中成长最快的前端库。而Laravel提供对Vue的直接支持。">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/02/Laravel学习之数据库-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/07/Laravel结合Vue的教程/"/>
 
 
 
 
 
-  <title>Laravel学习之数据库(1) | 用心去飞翔</title>
+  <title>Laravel结合Vue的教程 | 用心去飞翔</title>
   
 
 
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/Laravel学习之数据库-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/Laravel结合Vue的教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="蚂蚁">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Laravel学习之数据库(1)</h1>
+          <h1 class="post-title" itemprop="name headline">Laravel结合Vue的教程</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-02T00:55:00+08:00">
-                2017-09-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T23:20:56+08:00">
+                2017-09-07
               </time>
             
 
@@ -364,37 +364,9 @@
       
 
       
-        <p>这篇文章记录Laravel框架的基础数据库知识。</p>
+        <p>Laravel因为它的易用性，可扩展性和灵活性，成为成长最快的PHP框架；而Vue是JavaScript社区中成长最快的前端库。而Laravel提供对Vue的直接支持。</p>
 <a id="more"></a>
-<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Laravel使得数据库操作异常简单，使用方式：原始SQL，<code>fluent query builder</code>，<code>Eloquent ORM</code>。</p>
-<p>应用的数据库配置放在<code>config/database.php</code>，在该文件中，可以定义所有的数据库连接，并且声明默认使用哪个连接。</p>
-<p>使用命令创建新的SQLite数据库<code>touch database/database.sqlite</code>，可以很容易地配置环境变量来指向这个新创建的数据库。</p>
-<p>使用多个连接时，可以通过<code>DB</code>facade的<code>connection</code>方法来获取每个连接。传递给<code>connection</code>方法的<code>name</code>对应<code>config/database.php</code>配置文件中列出的连接之一。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$users = DB::connection(&apos;foo&apos;)-&gt;select(...);</div></pre></td></tr></table></figure>
-<p>可以使用connection实例对象的<code>getPdo</code>方法来获取原始的、底层的<code>PDO</code>实例。</p>
-<h4 id="运行原始的SQL查询"><a href="#运行原始的SQL查询" class="headerlink" title="运行原始的SQL查询"></a>运行原始的SQL查询</h4><p>一旦配置好数据库连接后，可以使用<code>DB</code>facade来运行SQL语句。<code>DB</code>facade为每种语句提供了方法：<code>select</code>、<code>update</code>、<code>insert</code>、<code>delete</code>、<code>statement</code>。</p>
-<p>使用<code>DB</code>facade的<code>select</code>方法来运行基本的查询：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function users() &#123;</div><div class="line">        $users = DB::select(&apos;select * from user where country = ?&apos;,[&apos;China&apos;]);</div><div class="line">        return view(&apos;user.users&apos;,[&apos;users&apos;=&gt;$users]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>传递给<code>select</code>方法的第一个参数是原始的SQL查询，第二个参数是绑定到查询上的参数绑定。<code>select</code>方法总是返回<code>array</code>结果。数组中的每个值都是PHP的<code>StdClass</code>对象,允许你获取对应的值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">foreach ($users as $user) &#123;</div><div class="line">            echo &apos;username &apos;.($user-&gt;name).&apos; age &apos;.($user-&gt;age).&apos; country &apos;.($user-&gt;country).&apos;&lt;br&gt;&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>除了使用<code>?</code>来表示参数绑定外，也可以使用命名绑定来执行查询：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$results = DB::select(&apos;select * from users where id = :id&apos;, [&apos;id&apos; =&gt; 1]);</div></pre></td></tr></table></figure>
-<p>使用<code>DB</code>facade的<code>insert</code>方法可以执行<code>insert</code>语句，该方法接收原始的SQL查询语句作为第一个参数，第二个参数则是参数绑定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function insertUser() &#123;</div><div class="line">        DB::insert(&apos;insert into user (name,age,country) values (?,?,?)&apos;,[&apos;weishanfeng&apos;,50,&apos;China&apos;]);</div><div class="line">        return redirect(&apos;users&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>update</code>方法用来更新数据库中已经存在的记录，语句影响的行数会被返回：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$affected = DB::update(&apos;update users set votes = 100 where name = ?&apos;, [&apos;John&apos;]);</div></pre></td></tr></table></figure>
-<p><code>delete</code>方法用来删除数据库中的记录，影响的行数会被返回：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$deleted = DB::delete(&apos;delete from users&apos;);</div></pre></td></tr></table></figure>
-<p>有些数据库操作语句不会返回任何值，对于这些类型的操作，可以使用<code>DB</code>facade的<code>statement</code>方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">DB::statement(&apos;drop table users&apos;);</div></pre></td></tr></table></figure>
-<p>如果想要接收到应用执行的每条SQL查询语句，可以使用<code>listen</code>方法，该方法用来打印查询语句或调试，可以在服务提供者中进行注册。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function boot()</div><div class="line">    &#123;</div><div class="line">        DB::listen(function ($query) &#123;</div><div class="line">            // $query-&gt;sql</div><div class="line">            // $query-&gt;bindings</div><div class="line">            // $query-&gt;time</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="数据库事务"><a href="#数据库事务" class="headerlink" title="数据库事务"></a>数据库事务</h4><p>可以使用<code>DB</code>facade的<code>transaction</code>方法来在数据库事务中执行一系列操作。如果事务闭包中发生异常，事务会自动回滚；如果闭包执行成功，事务会被自动提交。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">DB::transaction(function () &#123;</div><div class="line">    DB::table(&apos;users&apos;)-&gt;update([&apos;votes&apos; =&gt; 1]);</div><div class="line"></div><div class="line">    DB::table(&apos;posts&apos;)-&gt;delete();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><code>transaction</code>方法接收可选的第二个参数，用来定义当死锁发生时，事务重新尝试的次数。一旦尝试次数超出，就会抛出异常：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">DB::transaction(function () &#123;</div><div class="line">    DB::table(&apos;users&apos;)-&gt;update([&apos;votes&apos; =&gt; 1]);</div><div class="line"></div><div class="line">    DB::table(&apos;posts&apos;)-&gt;delete();</div><div class="line">&#125;, 5);</div></pre></td></tr></table></figure>
-<p>如果想要手动开始一个事务，能够完全地掌控回滚和提交，可以使用<code>beginTransaction</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">DB::beginTransaction();</div><div class="line"></div><div class="line">DB::rollBack();</div><div class="line"></div><div class="line">DB::commit();</div></pre></td></tr></table></figure>
+<p>#这里写上正文</p>
 
       
     </div>
@@ -431,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/Laravel学习之控制器/" rel="next" title="Laravel学习之控制器">
-                <i class="fa fa-chevron-left"></i> Laravel学习之控制器
+              <a href="/2017/09/06/WordPress相关问题/" rel="next" title="WordPress相关问题">
+                <i class="fa fa-chevron-left"></i> WordPress相关问题
               </a>
             
           </div>
@@ -441,8 +413,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/02/Laravel之-env文件与config下文件的配置/" rel="prev" title="Laravel之.env文件与config下文件的配置">
-                Laravel之.env文件与config下文件的配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/08/Web相关问题/" rel="prev" title="Web相关问题">
+                Web相关问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -490,17 +462,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400"
@@ -553,22 +516,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行原始的SQL查询"><span class="nav-number">2.</span> <span class="nav-text">运行原始的SQL查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库事务"><span class="nav-number">3.</span> <span class="nav-text">数据库事务</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
