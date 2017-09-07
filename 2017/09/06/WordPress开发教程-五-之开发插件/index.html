@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="#这里写上文章显示的摘要">
+<meta name="description" content="这篇文章记录了如何编写自己的插件，这样的话，你就可以修改WordPress网站，第三方插件，甚至是主题的功能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WordPress开发教程(五)之开发插件">
 <meta property="og:url" content="http://yoursite.com/2017/09/06/WordPress开发教程-五-之开发插件/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="#这里写上文章显示的摘要">
-<meta property="og:updated_time" content="2017-09-05T23:20:11.652Z">
+<meta property="og:description" content="这篇文章记录了如何编写自己的插件，这样的话，你就可以修改WordPress网站，第三方插件，甚至是主题的功能。">
+<meta property="og:updated_time" content="2017-09-07T15:12:17.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WordPress开发教程(五)之开发插件">
-<meta name="twitter:description" content="#这里写上文章显示的摘要">
+<meta name="twitter:description" content="这篇文章记录了如何编写自己的插件，这样的话，你就可以修改WordPress网站，第三方插件，甚至是主题的功能。">
 
 
 
@@ -335,6 +335,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,9 +386,31 @@
       
 
       
-        <p>#这里写上文章显示的摘要</p>
+        <p>这篇文章记录了如何编写自己的插件，这样的话，你就可以修改WordPress网站，第三方插件，甚至是主题的功能。</p>
 <a id="more"></a>
-<p>#这里写上正文</p>
+<h4 id="Hook-钩子-，Action和Filter"><a href="#Hook-钩子-，Action和Filter" class="headerlink" title="Hook(钩子)，Action和Filter"></a>Hook(钩子)，Action和Filter</h4><p>制作插件之前，让我们看下Hook，action和filter，它们是整个插件系统的基础，能够帮助你完全理解WordPress的工作原理。</p>
+<p>我们想要创建一个插件，可以向网站上添加一些数据分析跟踪代码。跟踪代码一般都是放在网页的底部(<code>&lt;/body&gt;</code>标签的前面)。</p>
+<p>之前提到过，必须要将<code>wp_head()</code>和<code>wp_footer()</code>函数添加到主题中。<code>wp_footer()</code>函数可以执行由插件定义的其它函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function my_tracking_code() &#123;</div><div class="line">  echo &apos;Paste tracking code from Google Analytics here&apos;;</div><div class="line">&#125;</div><div class="line">add_action( &apos;wp_footer&apos;, &apos;my_tracking_code&apos; );</div></pre></td></tr></table></figure>
+<p>上面代码中，我们编写了输出跟踪代码的函数，它只是放在插件中的一个函数。接着，使用<code>add_action()</code>函数，告诉WordPress什么时候该执行我们的函数。</p>
+<p>当WordPress执行到<code>wp_footer()</code>函数时，它会发现所有的被它钩住(使用<code>add_action()</code>)的函数。然后会一步一步地执行这些函数。</p>
+<h4 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h4><p>Hook是WordPress插件API的一部分，而action和filter是两种不同类型的hook。action允许你添加功能，你通常定义一个函数，WordPress处理hook的时候，就会运行该函数；而filter是用来修改存在的功能，例如，WordPress有个hook，可以决定文章摘要的长度，你可以使用filter来修改摘要的长度。</p>
+<p><code>add_action()</code>函数接收四个参数：hook的名字(函函数在哪执行)，被钩住的函数的名字(需要执行哪个函数)，优先级(函数被执行的顺序)，函数接收的参数(被钩住的函数接收参数的数量)。</p>
+<p>WordPress不仅仅会在主题中提供action，也会在后台管理页面和用户特定的动作上下文中。<code>publish_post</code>这个hook在文章被发表时会执行；此时接收的参数变得非常重要，如果向这个hook上添加一个函数，应该需要知道哪篇文章发表以及文章的详情；通过文档，该函数需要传递文章ID和文章数据。</p>
+<p>下面的代码实现：当发表文章时，需要发送电子邮件给文章作者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function our_author_notification( $id, $post ) &#123;</div><div class="line">    $author = $post-&gt;post_author;</div><div class="line">    $name = get_the_author_meta( &apos;display_name&apos;, $author );</div><div class="line">    $email = get_the_author_meta( &apos;user_email&apos;, $author );</div><div class="line">    </div><div class="line">    $link = get_permalink( $id );</div><div class="line">    </div><div class="line">    $message = &apos;Hello &apos; . $name . &quot;, \n\n&quot; . &quot;Your artcile &lt;a href=&apos;&quot; . $link . &quot;&apos;&gt;&quot; . $post-&gt;post_title . &quot;&lt;/a&gt; has been published.&quot;;</div><div class="line">    wp_mail( $email, &apos;One of your posts has been published&apos;, $message );</div><div class="line">    </div><div class="line">&#125;</div><div class="line">add_action( &apos;publish_post&apos;, &apos;our_author_notification&apos;, 10, 2 );</div></pre></td></tr></table></figure>
+<p>filter会修改数据，所以在被钩住的函数中会返回一些数据。使用<code>add_filter()</code>函数进行添加filter。</p>
+<p>我们可以使用filter来修改文章摘要最后面的更多显示格式，默认是<code>[...]</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function our_excerpt_more( $more ) &#123;</div><div class="line">	return &apos;there&apos;s more...&apos;;</div><div class="line">&#125;</div><div class="line">add_filter( &apos;excerpt_more&apos;, &apos;our_excerpt_more&apos; );</div></pre></td></tr></table></figure>
+<p>注意：上面没有声明优先级和接收的参数数量；默认值：优先级为10，接收的参数数量为1；在被钩住的函数中，并没有使用传递过来的参数，仅仅是返回一个字符串。</p>
+<p>可以使用相同的方法在文章内容的第一段落中嵌入广告：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">function in_content_ad( $content ) &#123;</div><div class="line">  $ad = &apos;&lt;div class=&quot;in-content-ad&quot;&gt;&lt;img src=&quot;https://placeholdit.imgix.net/~text?txtsize=33&amp;txt=Advertisement&amp;w=250&amp;h=250&quot;&gt;&lt;/div&gt;&apos;;</div><div class="line">  return $ad . $content;</div><div class="line">&#125;</div><div class="line">add_filter( &apos;the_content&apos;, &apos;in_content_ad&apos; );</div></pre></td></tr></table></figure>
+<p>了解hook是如何定义的以及如何创建我们自己的hook有助于理解系统的工作原理。假如我们创建一个电子商务的插件，添加列出商品的功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$products = get_products( 10 );</div><div class="line">show_products();</div></pre></td></tr></table></figure>
+<p>上面明显是硬编码的，如果别人只想显示三个商品呢？可以使用hook来解决这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$product_count = apply_filters( &apos;product_count&apos;, 10 );</div><div class="line">$products = get_products( $product_count );</div><div class="line">show_products();</div></pre></td></tr></table></figure>
+<p><code>apply_filter()</code>函数告诉WordPress，有个叫作<code>product_count</code>的hook，我们想要运行被它钩住的所有函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">add_filter( &apos;product_count&apos;, &apos;carousel_product_count&apos; );</div><div class="line">function carousel_product_count( $count ) &#123;</div><div class="line">  return 3;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -462,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars3.githubusercontent.com/u/29752326?v=3&u=3bb68640944997529f91c2d990adbb2261e5fe8e&s=400"
@@ -516,6 +569,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hook-钩子-，Action和Filter"><span class="nav-number">1.</span> <span class="nav-text">Hook(钩子)，Action和Filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#术语"><span class="nav-number">2.</span> <span class="nav-text">术语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
