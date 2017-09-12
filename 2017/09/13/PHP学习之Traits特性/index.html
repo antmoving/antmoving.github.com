@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="该篇文章记录了中间件的相关知识点。">
+<meta name="description" content="Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Laravel学习之中间件">
-<meta property="og:url" content="http://yoursite.com/2017/09/01/Laravel学习之中间件/index.html">
+<meta property="og:title" content="PHP学习之Traits特性">
+<meta property="og:url" content="http://yoursite.com/2017/09/13/PHP学习之Traits特性/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="该篇文章记录了中间件的相关知识点。">
-<meta property="og:updated_time" content="2017-09-01T14:44:52.286Z">
+<meta property="og:description" content="Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。">
+<meta property="og:updated_time" content="2017-09-12T16:18:40.727Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Laravel学习之中间件">
-<meta name="twitter:description" content="该篇文章记录了中间件的相关知识点。">
+<meta name="twitter:title" content="PHP学习之Traits特性">
+<meta name="twitter:description" content="Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/01/Laravel学习之中间件/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/13/PHP学习之Traits特性/"/>
 
 
 
 
 
-  <title>Laravel学习之中间件 | 用心去飞翔</title>
+  <title>PHP学习之Traits特性 | 用心去飞翔</title>
   
 
 
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/Laravel学习之中间件/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/PHP学习之Traits特性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="蚂蚁">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Laravel学习之中间件</h1>
+          <h1 class="post-title" itemprop="name headline">PHP学习之Traits特性</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T07:42:01+08:00">
-                2017-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T00:05:57+08:00">
+                2017-09-13
               </time>
             
 
@@ -386,35 +386,12 @@
       
 
       
-        <p>该篇文章记录了中间件的相关知识点。</p>
+        <p>Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。</p>
 <a id="more"></a>
-<h4 id="中间件的介绍"><a href="#中间件的介绍" class="headerlink" title="中间件的介绍"></a>中间件的介绍</h4><p>中间件用来过滤进入应用的HTTP请求。Laravel框架中包含几种中间件，例如验证、CSRF包含，所有这些中间件位于<code>app/Http/Middleware</code>目录中。</p>
-<h4 id="定义中间件"><a href="#定义中间件" class="headerlink" title="定义中间件"></a>定义中间件</h4><p>定义中间件，只有提供的<code>age</code>大于200，才允许获取路由，否则的话，会将用户重定向到<code>home</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">class CheckAge</div><div class="line">&#123;</div><div class="line">    public function handle($request, Closure $next)</div><div class="line">    &#123;</div><div class="line">        if ($request-&gt;age &lt;= 200) &#123;</div><div class="line">            return redirect(&apos;/&apos;);</div><div class="line">        &#125;</div><div class="line">        return $next($request);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上述代码中，如果给定的<code>age</code>小于或等于200，中间件就会返回HTTP重定向；否则的话，请求会被传递到应用中。为了将请求进一步传递到应用中，只需调用<code>$request</code>的<code>$next</code>方法。</p>
-<p>中间件在请求之前还是之后处理取决于中间件自身。</p>
-<p>下面的中间件会在请求被应用处理之前执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">class BeforeMiddleware</div><div class="line">&#123;</div><div class="line">    public function handle($request, Closure $next)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        return $next($request);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>下面的中间件会在请求被应用处理之后执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">class AfterMiddleware</div><div class="line">&#123;</div><div class="line">    public function handle($request, Closure $next)</div><div class="line">    &#123;</div><div class="line">        $response = $next($request);</div><div class="line"></div><div class="line">        return $response;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="注册中间件"><a href="#注册中间件" class="headerlink" title="注册中间件"></a>注册中间件</h4><p>如果想要中间件运行在每个HTTP请求上(全局中间件)时，只需要在<code>app/Http/Kernel.php</code>类的<code>$middleware</code>属性中列出中间件类。</p>
-<p>如果要将中间件分配给指定的路由，应该在<code>app/Http/Kernel.php</code>文件中分配给中间件一个key。默认地，该类的<code>$routeMiddleware</code>属性包含了Laravel框架提供的中间件；为了添加自己的中间件，只需将其添加到该列表中，并分配给它一个key。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">protected $routeMiddleware = [</div><div class="line">    &apos;auth&apos; =&gt; \Illuminate\Auth\Middleware</div><div class="line">];</div></pre></td></tr></table></figure>
-<p>一旦中间件定义在HTTP kernel中，可以使用<code>middleware</code>方法将中间件分配给路由。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;checkAge&apos;,function () &#123;</div><div class="line">    return view(&apos;welcome&apos;);</div><div class="line">&#125;)-&gt;middleware(&apos;check&apos;);</div></pre></td></tr></table></figure>
-<p>可以给路由指定多个中间件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">Route::get(&apos;checkAge&apos;,function () &#123;</div><div class="line">    return view(&apos;welcome&apos;);</div><div class="line">&#125;)-&gt;middleware(&apos;first&apos;,&apos;second&apos;);</div></pre></td></tr></table></figure>
-<p>指定中间件的时候，可以传递完整的类名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;checkAge&apos;,function () &#123;</div><div class="line">    return view(&apos;welcome&apos;);</div><div class="line">&#125;)-&gt;middleware(\App\Http\Middleware\CheckAge::class);</div></pre></td></tr></table></figure>
-<p>如果想要将几个中间件放在同一组中，可以使用HTTP kernel的<code>$middlewareGroups</code>属性。</p>
-<h4 id="中间件参数"><a href="#中间件参数" class="headerlink" title="中间件参数"></a>中间件参数</h4><p>中间件可以接收额外的参数，参数会被传递给<code>handle</code>方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function handle($request, Closure $next, $role)</div><div class="line">   &#123;</div><div class="line">       if (! $request-&gt;user()-&gt;hasRole($role)) &#123;</div><div class="line"></div><div class="line">       &#125;</div><div class="line"></div><div class="line">       return $next($request);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>在定义路由时可以声明中间件参数，中间件名和参数用<code>:</code>隔开，多个参数使用,`隔开：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::put(&apos;post/&#123;id&#125;&apos;, function ($id) &#123;</div><div class="line">    //</div><div class="line">&#125;)-&gt;middleware(&apos;role:editor&apos;);</div></pre></td></tr></table></figure>
-<p>有时候中间件需要在HTTP响应发送给浏览器后执行一些工作，例如，响应发送浏览器后，Laravel包含的session中间件会将session数据写到存储中。如果在中间件中定义了<code>terminate</code>方法，在响应发送给浏览器后会被自动执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">class StartSession</div><div class="line">&#123;</div><div class="line">    public function handle($request, Closure $next)</div><div class="line">    &#123;</div><div class="line">        return $next($request);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function terminate($request, $response)</div><div class="line">    &#123;</div><div class="line">        // Store the session data...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>terminate</code>方法接收请求和响应作为参数，一旦定义terminable中间件，应该将它添加到<code>app/Http/Kernel.php</code>文件中的路由中间件列表或全局中间件中。</p>
-<p>调用中间件的<code>terminate</code>方法时，Laravel会从服务容器中解析全新的中间件实例。当调用<code>handle</code>和<code>terminate</code>方法时，如果想要使用相同的中间件实例，可以使用容器的<code>singleton</code>方法来在容器中注册中间件</p>
+<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。Trait 为了减少单继承语言的限制，使开发人员能够自由地在不同层次结构内独立的类中复用 method。Trait 和 Class 组合的语义定义了一种减少复杂性的方式，避免传统多继承和 Mixin 类相关典型问题。</p>
+<p>注意：无法通过 trait 自身来实例化。在类中使用trait，则trait中的方法就会变成类的方法。</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?php</div><div class="line">trait Hello &#123;</div><div class="line">    public function sayHello() &#123;</div><div class="line">        echo &apos;Hello &apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">trait World &#123;</div><div class="line">    public function sayWorld() &#123;</div><div class="line">        echo &apos;World&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class MyHelloWorld &#123;</div><div class="line">    use Hello, World;</div><div class="line">    public function sayExclamationMark() &#123;</div><div class="line">        echo &apos;!&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$o = new MyHelloWorld();</div><div class="line">$o-&gt;sayHello();</div><div class="line">$o-&gt;sayWorld();</div><div class="line">$o-&gt;sayExclamationMark();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h4 id="其它知识点"><a href="#其它知识点" class="headerlink" title="其它知识点"></a>其它知识点</h4><p>从基类继承的成员会被 trait 插入的成员所覆盖。优先顺序是来自当前类的成员覆盖了 trait 的方法，而 trait 则覆盖了被继承的方法。</p>
 
       
     </div>
@@ -451,8 +428,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/31/Laravel学习之视图/" rel="next" title="Laravel学习之视图">
-                <i class="fa fa-chevron-left"></i> Laravel学习之视图
+              <a href="/2017/09/12/在一台电脑上同时搭建多个Github账号环境/" rel="next" title="在一台电脑上同时搭建多个Github账号环境">
+                <i class="fa fa-chevron-left"></i> 在一台电脑上同时搭建多个Github账号环境
               </a>
             
           </div>
@@ -460,10 +437,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/01/Laravel学习之控制器/" rel="prev" title="Laravel学习之控制器">
-                Laravel学习之控制器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -583,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#中间件的介绍"><span class="nav-number">1.</span> <span class="nav-text">中间件的介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义中间件"><span class="nav-number">2.</span> <span class="nav-text">定义中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册中间件"><span class="nav-number">3.</span> <span class="nav-text">注册中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间件参数"><span class="nav-number">4.</span> <span class="nav-text">中间件参数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它知识点"><span class="nav-number">3.</span> <span class="nav-text">其它知识点</span></a></li></ol></div>
             
 
           </div>
