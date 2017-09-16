@@ -312,7 +312,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/16/Python基础知识回顾/" itemprop="url">Python基础知识回顾</a></h1>
+                <a class="post-title-link" href="/2017/09/16/Python基础知识回顾/" itemprop="url">Python网络编程</a></h1>
         
 
         <div class="post-meta">
@@ -382,14 +382,22 @@
 
       
         
-          <p>这篇文章回顾了Python的基础知识点。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/16/Python基础知识回顾/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p>这篇文章回顾了Python的网络编程相关知识。</p>
+<h4 id="网络模块"><a href="#网络模块" class="headerlink" title="网络模块"></a>网络模块</h4><p>标准库中有许多网络模块，除此之外，也有许多第三方的网络模块。</p>
+<h6 id="socket模块"><a href="#socket模块" class="headerlink" title="socket模块"></a>socket模块</h6><p>socket有两种形式：服务端socket和客户端socket。</p>
+<p>创建好服务端socket后，它就会等待来自客户端socket的连接，它会以特定的网络地址(ip和端口号)来监听客户端的连接。</p>
+<p>服务端socket代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import socket</div><div class="line">s = socket.socket()</div><div class="line"></div><div class="line">host = socket.gethostname()</div><div class="line">port = 1234</div><div class="line">s.bind((host,port))</div><div class="line">s.listen(5)</div><div class="line"></div><div class="line">while True:</div><div class="line">    c,addr = s.accept()</div><div class="line">    print(&apos;Got connection from&apos;, addr)</div><div class="line">    c.send(&apos;Thank you for connecting&apos;.encode(&apos;utf8&apos;))</div><div class="line">    c.close()</div></pre></td></tr></table></figure>
+<p>客户端socket代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import socket</div><div class="line">s = socket.socket()</div><div class="line"></div><div class="line">host = socket.gethostname()</div><div class="line">port = 1234</div><div class="line"></div><div class="line">s.connect((host,port))</div><div class="line">print(s.recv(1024).decode(&apos;utf8&apos;))</div></pre></td></tr></table></figure>
+<h6 id="urllib和urllib2模块"><a href="#urllib和urllib2模块" class="headerlink" title="urllib和urllib2模块"></a>urllib和urllib2模块</h6><p>urllib和urllib2模块允许你通过网络获取文件，作为程序的输入。如果进行简单的下载，urllib模块就足够；如果需要HTTP验证或cookie，那么urllib2是很好的选择。</p>
+<p>打开远程文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">from urllib.request import urlopen</div><div class="line">webpage = urlopen(&apos;https://www.baidu.com&apos;)</div><div class="line">print(webpage.read())</div></pre></td></tr></table></figure>
+<p>获取远程文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">from urllib.request import urlretrieve</div><div class="line">urlretrieve(&apos;https://www.baidu.com&apos;,&apos;E:\\baidu.html&apos;)</div></pre></td></tr></table></figure>
+
+          
         
       
     </div>
