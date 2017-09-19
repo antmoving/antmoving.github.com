@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="这篇文章主要记录Laravel框架的视图部分学习。">
+<meta name="description" content="这篇文章记录了正则表达式规则以及Python中的正则表达式的使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Laravel学习之视图">
-<meta property="og:url" content="http://yoursite.com/2017/08/31/Laravel学习之视图/index.html">
+<meta property="og:title" content="Python的正则表达式">
+<meta property="og:url" content="http://yoursite.com/2017/09/16/Python的正则表达式/index.html">
 <meta property="og:site_name" content="用心去飞翔">
-<meta property="og:description" content="这篇文章主要记录Laravel框架的视图部分学习。">
-<meta property="og:updated_time" content="2017-08-31T14:46:20.714Z">
+<meta property="og:description" content="这篇文章记录了正则表达式规则以及Python中的正则表达式的使用">
+<meta property="og:updated_time" content="2017-09-16T13:33:12.944Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Laravel学习之视图">
-<meta name="twitter:description" content="这篇文章主要记录Laravel框架的视图部分学习。">
+<meta name="twitter:title" content="Python的正则表达式">
+<meta name="twitter:description" content="这篇文章记录了正则表达式规则以及Python中的正则表达式的使用">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/31/Laravel学习之视图/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/16/Python的正则表达式/"/>
 
 
 
 
 
-  <title>Laravel学习之视图 | 用心去飞翔</title>
+  <title>Python的正则表达式 | 用心去飞翔</title>
   
 
 
@@ -295,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Laravel学习之视图/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/Python的正则表达式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="蚂蚁">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Laravel学习之视图</h1>
+          <h1 class="post-title" itemprop="name headline">Python的正则表达式</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T22:00:29+08:00">
-                2017-08-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T20:49:32+08:00">
+                2017-09-16
               </time>
             
 
@@ -334,28 +334,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -386,32 +364,20 @@
       
 
       
-        <p>这篇文章主要记录Laravel框架的视图部分学习。</p>
+        <p>这篇文章记录了正则表达式规则以及Python中的正则表达式的使用</p>
 <a id="more"></a>
-<h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><p>视图包含应用提供的HTML，将控制器/应用逻辑和展示层进行分离。视图放在<code>resources/views</code>目录下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;html&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;h1&gt;Hello, &#123;&#123; $name &#125;&#125;&lt;/h1&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>该视图存放在<code>resources/views/greeting.blade.php</code>，可以使用全局的<code>view</code>辅助函数来返回：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Route::get(&apos;/&apos;,function () &#123;</div><div class="line">    return view(&apos;greeting&apos;,[&apos;name&apos; =&gt; &apos;wflytoc&apos;]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><code>view</code>辅助函数的第一个参数对应<code>resources/views</code>目录中视图文件的名称，第二个参数是传递给视图的数据数组。</p>
-<p>视图可以嵌套在<code>resources/views</code>目录的子目录中，<code>.</code>可以用来引用嵌套的视图。如果你的视图存放在<code>resources/views/admin/profile.blade.php</code>中，可以这样引用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">return view(&apos;admin.profile&apos;, $data);</div></pre></td></tr></table></figure>
-<p>如果需要判断视图是否存在，可以使用<code>View</code>facade。如果视图存在的话，<code>exists</code>方法就会返回<code>true</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">if (View::exists(&apos;emails.customer&apos;)) &#123;</div><div class="line">    //</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="将数据传递给视图"><a href="#将数据传递给视图" class="headerlink" title="将数据传递给视图"></a>将数据传递给视图</h4><p>可以向视图传递数据数组：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">return view(&apos;greetings&apos;, [&apos;name&apos; =&gt; &apos;Victoria&apos;]);</div></pre></td></tr></table></figure>
-<p>以这种方式传递信息时，数据应该是键值对形式的数组。在视图中，使用对应的key来获取每个值。除此之外，还可以使用<code>with</code>方法向视图中单个添加数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">return view(&apos;greeting&apos;)-&gt;with(&apos;name&apos;, &apos;Victoria&apos;);</div></pre></td></tr></table></figure>
-<p>有时候，需要在所有的视图中共享同一组数据，可以使用<code>share</code>方法。通常，<code>share</code>方法应该在服务提供者的<code>boot</code>方法中调用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function boot()</div><div class="line">    &#123;</div><div class="line">        View::share(&apos;key&apos;, &apos;value&apos;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="View-Composer"><a href="#View-Composer" class="headerlink" title="View Composer"></a>View Composer</h4><p>View Composer是回调或类方法，在视图被渲染的时候调用。如果视图每次被渲染的时候，想要绑定数据到上面，View Composer能够实现这样的功能。</p>
-<p>在服务提供者中注册View Composer：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function boot()&#123;</div><div class="line">     // 使用基于类的Composer</div><div class="line">      View::composer(</div><div class="line">            &apos;profile&apos;, &apos;App\Http\ViewComposers\ProfileComposer&apos;</div><div class="line">       );</div><div class="line"></div><div class="line">      // 使用基于闭包的Composer</div><div class="line">       View::composer(&apos;dashboard&apos;, function ($view) &#123;</div><div class="line">            //</div><div class="line">       &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注册了Composer后，每次<code>profile</code>视图被渲染时，<code>ProfileComposer@compose</code>方法就会执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public function compose(View $view)</div><div class="line">   &#123;</div><div class="line">       $view-&gt;with(&apos;count&apos;, $this-&gt;users-&gt;count());</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>可以将View composer与多个视图关联，向<code>composer</code>方法的第一个参数传递视图数组：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">View::composer(</div><div class="line">    [&apos;profile&apos;, &apos;dashboard&apos;],</div><div class="line">    &apos;App\Http\ViewComposers\MyViewComposer&apos;</div><div class="line">);</div></pre></td></tr></table></figure>
-<p>View creator和View composer相似，但是它是在视图被实例化后马上就会执行，为了注册View creator，调用<code>creator</code>方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">View::creator(&apos;profile&apos;, &apos;App\Http\ViewCreators\ProfileCreator&apos;)</div></pre></td></tr></table></figure>
+<h4 id="正则表达式规则"><a href="#正则表达式规则" class="headerlink" title="正则表达式规则"></a>正则表达式规则</h4><h6 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h6><ul>
+<li><code>^</code>：输入字符串开始的位置</li>
+<li><code>$</code>：输入字符串结尾的位置</li>
+</ul>
+<h4 id="Python中正则表达式的使用"><a href="#Python中正则表达式的使用" class="headerlink" title="Python中正则表达式的使用"></a>Python中正则表达式的使用</h4><ul>
+<li>在Python中，字符串前面添加字母<code>r</code>即可将字符串变成原始字符串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">results = re.findall(r&apos;\b[Ff]\w+&apos;, text)</div></pre></td></tr></table></figure>
+<ul>
+<li></li>
+</ul>
+
       
     </div>
 
@@ -447,8 +413,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/30/Laravel学习之路由/" rel="next" title="Laravel学习之路由">
-                <i class="fa fa-chevron-left"></i> Laravel学习之路由
+              <a href="/2017/09/16/Python的模块/" rel="next" title="Python的模块">
+                <i class="fa fa-chevron-left"></i> Python的模块
               </a>
             
           </div>
@@ -456,10 +422,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/01/Laravel学习之中间件/" rel="prev" title="Laravel学习之中间件">
-                Laravel学习之中间件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -579,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建视图"><span class="nav-number">1.</span> <span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将数据传递给视图"><span class="nav-number">2.</span> <span class="nav-text">将数据传递给视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View-Composer"><span class="nav-number">3.</span> <span class="nav-text">View Composer</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#正则表达式规则"><span class="nav-number">1.</span> <span class="nav-text">正则表达式规则</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#定位符"><span class="nav-number">1.0.1.</span> <span class="nav-text">定位符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python中正则表达式的使用"><span class="nav-number">2.</span> <span class="nav-text">Python中正则表达式的使用</span></a></li></ol></div>
             
 
           </div>
